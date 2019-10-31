@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+ 
+	<title>登录页面</title>
+	<!--<link th:href="@{css/login.css}" rel="stylesheet">-->
+	<link th:href="@{/front/css/login-base.css}" rel="stylesheet">
+	<link th:href="@{/front/css/login-home.css}" rel="stylesheet">
+</head>
+<body>
+
+<header class="aui-header">
+	<div class="aui-header-box">
+		<h1>
+			<a th:href="@{/}" class="aui-header-box-logo">蜗牛影院</a>
+		</h1>
+	</div>
+</header>
+
+<section class="aui-content">
+	<div class="aui-content-box clearfix">
+		<div class="aui-content-box-fl">
+			<div class="aui-form-header">
+				<div class="aui-form-header-item" hidden>密码登录</div>
+				<div class="aui-form-header-item" onclick="user_login()">密码登录</div>
+				<div class="aui-form-header-item on">验证码登录</div>
+				<span class="aui-form-header-san"></span>
+			</div>
+			<div class="aui-form-content">
+				<div class="aui-form-content-item">
+					<form action="" id="form-login-2">
+						<div class="aui-form-list">
+							<input type="text" class="aui-input" name="email" placeholder="请输入邮箱" required="true" zemail="true" data-required="required" autocomplete="off">
+						</div>
+						<div class="aui-form-list">
+							<input type="text" class="aui-input" name="codeImg" id="2" placeholder="请证明你不是机器人" required="true" data-required="required" autocomplete="off">
+							<a href="javascript:getVerifiCode()" class="aui-child aui-child-img">
+								<img th:src="@{/picture}" id="yzm_img2" alt="" height="100%">
+							</a>
+						</div>
+						<div class="aui-form-list">
+							<input type="text" class="aui-input" name="codeemail" id="3" placeholder="请输入验证码" required="true" data-required="required" autocomplete="off">
+							<input type="button" class="aui-child" value="获取验证码" onclick="getCodeEmail()">
+						</div>
+						<div class="aui-form-pwd clearfix">
+							<input type="checkbox" name="remember" id="customCheck">
+							<label for="customCheck"></label>&ensp;记住我
+							<a href="#">忘记密码？</a>
+						</div>
+						<div class="aui-form-btn">
+							<input type="submit" class="aui-btn" value="登&nbsp;录">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="aui-content-box-fr">
+			<div class="aui-content-box-text">
+				<h3>还没有帐号:</h3>
+				<a th:href="@{/qregister}" class="aui-ll-link">立即注册</a>
+				<h3>使用第三方帐号直接登录:</h3>
+				<ul class="aui-content-box-text-link clearfix">
+					<li><a href="#" class="aui-icon-sina"   title="使用新浪微博帐号登录"></a></li>
+					<li><a href="#" class="aui-icon-wechat" title="使用微信帐号登录"></a></li>
+					<li><a href="#" class="aui-icon-qq"     title="使用腾讯QQ帐号登录"></a></li>
+					<li><a href="#" class="aui-icon-baidu"  title="使用百度帐号登录"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript" th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+<script type="text/javascript" th:src="@{/front/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/front/js/messages_zh.min.js}"></script>
+<script type="text/javascript" th:src="@{/front/js/additional-methods.js}"></script>
+<script type="text/javascript">
+	$(function(){
+
+		/*tab标签切换*/
+		function tabs(tabTit,on,tabCon){
+			$(tabCon).each(function(){
+				$(this).children().eq(0).show();
+
+			});
+			$(tabTit).each(function(){
+				$(this).children().eq(0).addClass(on);
+			});
+			$(tabTit).children().click(function(){
+				$(this).addClass(on).siblings().removeClass(on);
+				var index = $(tabTit).children().index(this);
+				$(tabCon).children().eq(index).show().siblings().hide();
+			});
+		}
+		tabs(".aui-form-header","on",".aui-form-content");
+
+	});
+
+	$(function() {
+		if ($.validator) {
+			//fix: when several input elements shares the same name, but has different id-ies....
+			$.validator.prototype.elements = function() {
+				var validator = this,
+						rulesCache = {};
+				// select all valid inputs inside the form (no submit or reset buttons)
+				// workaround $Query([]).add until http://dev.jquery.com/ticket/2114 is solved
+				return $([]).add(this.currentForm.elements).filter(":input").not(":submit, :reset, :image, [disabled]").not(this.settings.ignore).filter(function() {
+					// 这里加入ID判断
+					var elementIdentification = this.id || this.name; ! elementIdentification && validator.settings.debug && window.console && console.error("%o has no id nor name assigned", this);
+					// select only the first element for each name, and only those with rules specified
+					if (elementIdentification in rulesCache || !validator.objectLength($(this).rules())) return false;
+					rulesCache[elementIdentification] = true;
+					return true;
+				});
+			};
+		}
+	});
+
+
+	//校验form
+	$.validator.setDefaults({
+		submitHandler: function() {
+			var params = $("#form-login-2").serialize();
+			//alert(params);
+			$.post("/quser/loginmail",params,function (data) {
+				alert(data);
+				if(data=="登录成功"){
+					location.href="/"
+				}
+			})
+		}
+	});
+	$().ready(function() {
+		$("#form-login-1").validate();
+	});
+	$().ready(function() {
+		$("#form-login-2").validate();
+	});
+
+	//更新验证码
+	function getVerifiCode() {
+		$("#yzm_img1").prop('src','/picture?a='+new Date().getTime());
+		$("#yzm_img2").prop('src','/picture?a='+new Date().getTime());
+	}
+
+	//密码登录
+	function user_login() {
+		location.href="login";
+	}
+
+	//获取验证码
+	function getCodeEmail() {
+		var params = $("#form-login-2").serialize();
+		//alert(params);
+		$.post("/quser/getlogincode",params,function (data) {
+			alert(data)
+		})
+	}
+
+</script>
+
+<footer class="footer">
+	<div class="copyright">
+		<p>
+			&copy;<span>2019</span>
+			<a th:href="@{/}">蜗牛影院</a>
+			woniucinema.com
+		</p>
+	</div>
+</footer>
+
+
+</body>
+</html>

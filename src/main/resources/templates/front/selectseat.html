@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/selectseat.css}"/>
+</head>
+<body>
+<div th:replace="front/common::common-header"></div>
+
+
+<div class="container" id="app" class="page-cinemas/seat" >
+    <div class="order-progress-bar">
+        <div class="step first done">
+            <span class="step-num">1</span>
+            <div class="bar"></div>
+            <span class="step-text">选择影片场次</span>
+        </div>
+        <div class="step done">
+            <span class="step-num">2</span>
+            <div class="bar"></div>
+            <span class="step-text">选择座位</span>
+        </div>
+        <div class="step ">
+            <span class="step-num">3</span>
+            <div class="bar"></div>
+            <span class="step-text">14分钟内付款</span>
+        </div>
+        <div class="step last ">
+            <span class="step-num">4</span>
+            <div class="bar"></div>
+            <span class="step-text">影院取票观影</span>
+        </div>
+    </div>
+
+
+    <div class="main clearfix">
+        <div class="hall">
+            <div class="seat-example">
+                <div class="selectable-example example">
+                    <span>可选座位</span>
+                </div>
+                <div class="sold-example example">
+                    <span>已售座位</span>
+                </div>
+                <div class="selected-example example">
+                    <span>已选座位</span>
+                </div>
+                <div class="couple-example example">
+                    <span>情侣座位</span>
+                </div>
+            </div>
+
+
+            <div class="seats-block" data-cols="16" data-section-id="1" data-section-name="普通区" data-seq-no="201910190003719">
+                <div class="row-id-container">
+                    <span class="row-id">1</span>
+                    <span class="row-id">2</span>
+                    <span class="row-id">3</span>
+                    <span class="row-id">4</span>
+                    <span class="row-id">5</span>
+                    <span class="row-id">6</span>
+                    <span class="row-id">7</span>
+                    <span class="row-id">8</span>
+                    <span class="row-id">9</span>
+                </div>
+
+                <div class="seats-container">
+                    <div class="screen-container">
+                        <div class="screen">银幕中央</div>
+                        <div class="c-screen-line"></div>
+                    </div>
+
+                    <div class="seats-wrapper">
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="1"
+                  data-no="1-1-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="1"
+                                  data-no="1-1-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="1"
+                                  data-no="1-1-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="1"
+                                  data-no="1-1-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="1"
+                                  data-no="1-1-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="1"
+                                  data-no="1-1-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="1"
+                                  data-no="1-1-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="1"
+                                  data-no="1-1-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="1"
+                                  data-no="1-1-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="5"
+                                  data-row-id="1"
+                                  data-no="1-1-5"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="1"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="3"
+                                  data-row-id="1"
+                                  data-no="1-1-3"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="1"
+                                  data-no="1-1-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="1"
+                                  data-no="1-1-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="1"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="1"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="2"
+                  data-no="1-2-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="2"
+                                  data-no="1-2-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="2"
+                                  data-no="1-2-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="2"
+                                  data-no="1-2-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="2"
+                                  data-no="1-2-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="2"
+                                  data-no="1-2-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="2"
+                                  data-no="1-2-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="2"
+                                  data-no="1-2-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="2"
+                                  data-no="1-2-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="2"
+                                  data-no="1-2-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="2"
+                                  data-no="1-2-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="2"
+                                  data-no="1-2-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="2"
+                                  data-no="1-2-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="2"
+                                  data-no="1-2-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="2"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="2"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="3"
+                  data-no="1-3-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="3"
+                                  data-no="1-3-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="3"
+                                  data-no="1-3-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="3"
+                                  data-no="1-3-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="3"
+                                  data-no="1-3-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="3"
+                                  data-no="1-3-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="3"
+                                  data-no="1-3-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="3"
+                                  data-no="1-3-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="3"
+                                  data-no="1-3-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="3"
+                                  data-no="1-3-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="3"
+                                  data-no="1-3-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="3"
+                                  data-no="1-3-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="3"
+                                  data-no="1-3-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="3"
+                                  data-no="1-3-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="3"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="3"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="4"
+                  data-no="1-4-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="4"
+                                  data-no="1-4-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="4"
+                                  data-no="1-4-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="4"
+                                  data-no="1-4-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="4"
+                                  data-no="1-4-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="4"
+                                  data-no="1-4-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="4"
+                                  data-no="1-4-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="4"
+                                  data-no="1-4-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="4"
+                                  data-no="1-4-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="4"
+                                  data-no="1-4-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="4"
+                                  data-no="1-4-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="4"
+                                  data-no="1-4-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="4"
+                                  data-no="1-4-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="4"
+                                  data-no="1-4-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="4"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="4"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="5"
+                  data-no="1-5-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="5"
+                                  data-no="1-5-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="5"
+                                  data-no="1-5-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="5"
+                                  data-no="1-5-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="5"
+                                  data-no="1-5-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="5"
+                                  data-no="1-5-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="5"
+                                  data-no="1-5-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="5"
+                                  data-no="1-5-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="5"
+                                  data-no="1-5-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="5"
+                                  data-no="1-5-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="5"
+                                  data-no="1-5-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="5"
+                                  data-no="1-5-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="5"
+                                  data-no="1-5-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="5"
+                                  data-no="1-5-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="5"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="5"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="6"
+                  data-no="1-6-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="6"
+                                  data-no="1-6-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="6"
+                                  data-no="1-6-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="6"
+                                  data-no="1-6-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="6"
+                                  data-no="1-6-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="9"
+                                  data-row-id="6"
+                                  data-no="1-6-9"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="8"
+                                  data-row-id="6"
+                                  data-no="1-6-8"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="6"
+                                  data-no="1-6-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="6"
+                                  data-row-id="6"
+                                  data-no="1-6-6"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="5"
+                                  data-row-id="6"
+                                  data-no="1-6-5"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="6"
+                                  data-no="1-6-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="6"
+                                  data-no="1-6-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="6"
+                                  data-no="1-6-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="6"
+                                  data-no="1-6-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="6"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="6"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="7"
+                  data-no="1-7-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="7"
+                                  data-no="1-7-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="7"
+                                  data-no="1-7-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="7"
+                                  data-no="1-7-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="7"
+                                  data-no="1-7-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="9"
+                                  data-row-id="7"
+                                  data-no="1-7-9"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="8"
+                                  data-row-id="7"
+                                  data-no="1-7-8"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="7"
+                                  data-row-id="7"
+                                  data-no="1-7-7"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="6"
+                                  data-row-id="7"
+                                  data-no="1-7-6"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="7"
+                                  data-no="1-7-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="7"
+                                  data-no="1-7-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="7"
+                                  data-no="1-7-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="7"
+                                  data-no="1-7-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="7"
+                                  data-no="1-7-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="7"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="7"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="14"
+                  data-row-id="8"
+                  data-no="1-8-14"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="13"
+                                  data-row-id="8"
+                                  data-no="1-8-13"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="12"
+                                  data-row-id="8"
+                                  data-no="1-8-12"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="8"
+                                  data-no="1-8-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="8"
+                                  data-no="1-8-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="9"
+                                  data-row-id="8"
+                                  data-no="1-8-9"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="8"
+                                  data-row-id="8"
+                                  data-no="1-8-8"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="8"
+                                  data-no="1-8-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="6"
+                                  data-row-id="8"
+                                  data-no="1-8-6"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="8"
+                                  data-no="1-8-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="8"
+                                  data-no="1-8-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="8"
+                                  data-no="1-8-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="8"
+                                  data-no="1-8-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="8"
+                                  data-no="1-8-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="8"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat empty"
+                                  data-column-id=""
+                                  data-row-id="8"
+                                  data-no=""
+                                  data-st="E"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                        <div class="row">
+            <span class="seat selectable"
+                  data-column-id="16"
+                  data-row-id="9"
+                  data-no="1-9-16"
+                  data-st="N"
+                  data-act="seat-click"
+                  data-bid="b_s7eiiijf"
+            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="15"
+                                  data-row-id="9"
+                                  data-no="1-9-15"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="14"
+                                  data-row-id="9"
+                                  data-no="1-9-14"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="13"
+                                  data-row-id="9"
+                                  data-no="1-9-13"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="12"
+                                  data-row-id="9"
+                                  data-no="1-9-12"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="11"
+                                  data-row-id="9"
+                                  data-no="1-9-11"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="10"
+                                  data-row-id="9"
+                                  data-no="1-9-10"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="9"
+                                  data-row-id="9"
+                                  data-no="1-9-9"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat sold"
+                                  data-column-id="8"
+                                  data-row-id="9"
+                                  data-no="1-9-8"
+                                  data-st="LK"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="7"
+                                  data-row-id="9"
+                                  data-no="1-9-7"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="6"
+                                  data-row-id="9"
+                                  data-no="1-9-6"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="5"
+                                  data-row-id="9"
+                                  data-no="1-9-5"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="4"
+                                  data-row-id="9"
+                                  data-no="1-9-4"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="3"
+                                  data-row-id="9"
+                                  data-no="1-9-3"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="2"
+                                  data-row-id="9"
+                                  data-no="1-9-2"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                            <span class="seat selectable"
+                                  data-column-id="1"
+                                  data-row-id="9"
+                                  data-no="1-9-1"
+                                  data-st="N"
+                                  data-act="seat-click"
+                                  data-bid="b_s7eiiijf"
+                            ></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="side">
+            <div class="movie-info clearfix">
+                <div class="poster">
+                    <img src="https://p0.meituan.net/movie/c437c3e340eff266f5cc7dcc79bead6b2406517.jpg@115w_158h_1e_1c">
+                </div>
+                <div class="content">
+                    <p class="name text-ellipsis">双子杀手</p>
+                    <div class="info-item">
+                        <span>类型 :</span>
+                        <span class="value">剧情,动作</span>
+                    </div>
+                    <div class="info-item">
+                        <span>时长 :</span>
+                        <span class="value">117分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="show-info">
+                <div class="info-item">
+                    <span>影院 :</span>
+                    <span class="value text-ellipsis">万达影城（金山万达广场店）</span>
+                </div>
+                <div class="info-item">
+                    <span>影厅 :</span>
+                    <span class="value text-ellipsis">10号-6FL厅</span>
+                </div>
+                <div class="info-item">
+                    <span>版本 :</span>
+                    <span class="value text-ellipsis">英语3D</span>
+                </div>
+                <div class="info-item">
+                    <span>场次 :</span>
+                    <span class="value text-ellipsis screen">今天 10月19 11:30</span>
+                </div>
+                <div class="info-item">
+                    <span>票价 :</span>
+                    <span class="value text-ellipsis">￥40.9/张</span>
+                </div>
+            </div>
+
+            <div class="ticket-info">
+                <div class="no-ticket">
+                    <p class="buy-limit">座位：一次最多选6个座位</p>
+                    <p class="no-selected">请<span>点击左侧</span>座位图选择座位</p>
+                </div>
+                <div class="has-ticket" style="display:none">
+                    <span class="text">座位：</span>
+                    <div class="ticket-container" data-limit="6"></div>
+                </div>
+
+                <div class="total-price">
+                    <span>总价 :</span>
+                    <span class="price">0</span>
+                </div>
+            </div>
+
+            <div class="confirm-order">
+                <div class="cellphone">
+                    <span>手机号 :</span>
+                    <span class="phone-num">177****2757</span>
+                </div>
+                <div class="confirm-btn disable" data-act="confirm-click" data-bid="b_0a0ep6pp">确认选座</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-container" style="display:none">
+        <div class="modal">
+            <span class="icon"></span>
+
+            <p class="tip"></p>
+
+            <div class="ok-btn btn">我知道了</div>
+        </div>
+    </div>
+
+    <script src="https://s0.meituan.net/bs/mt-login-component/v1.0.12/index.min.js"></script>
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+</body>
+</html>

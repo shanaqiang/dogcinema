@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/filmdetails.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/font-awesome.min.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}"/>-->
+    <script type="text/javascript" th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/wangEditor.min.js}"></script>
+    <script th:src="@{/front/js/jquery.raty.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/front/js/bootstrap.min.4.3.1.js}"></script>-->
+</head>
+<body>
+
+<div th:replace="front/common::common-header(activeUri='/films')"></div>
+
+<div class="banner">
+    <div class="wrapper clearfix">
+        <div class="celeInfo-left">
+            <div class="avatar-shadow">
+                <img class="avatar"
+                     th:src="${film.filmimg}"
+                     alt="">
+                <div class="movie-ver"><i class="imax2d"></i></div>
+            </div>
+        </div>
+        <div class="celeInfo-right clearfix">
+            <div class="movie-brief-container">
+                <h3 class="name" th:text="${film.fname}">双子杀手</h3>
+                <div class="ename ellipsis" th:text="${film.director}">Gemini Man</div>
+                <ul>
+                    <li class="ellipsis" th:text="${film.type}">剧情,动作</li>
+                    <li class="ellipsis" th:text="${film.country}+'/'+${film.language}">
+                        美国
+                        / 117分钟
+                    </li>
+                    <li class="ellipsis" th:text="${#dates.format(film.releasedate, 'yyyy-MM-dd')}+'大陆上映'">2019-10-18大陆上映</li>
+                </ul>
+            </div>
+            <div class="action-buyBtn">
+                <div class="action clearfix" data-val="{movieid:503342}">
+                    <a href="javascript:wishfilm()" class="wish" data-wish="false" data-score="" data-bid="b_gbxqtw6x">
+                        <div id="wish-film-div">
+                            <i class="fa fa-heart"></i>
+                            <span class="wish-msg" data-act="wish-click">想看</span>
+                        </div>
+                    </a>
+                    <a href="javascript:comment()" id="parentIframe" class="score-btn " data-bid="b_rxxpcgwd">
+                        <div>
+                            <i class="icon score-btn-icon"></i>
+                            <span class="score-btn-msg" data-act="comment-open-click">
+                评分
+            </span>
+                        </div>
+                    </a>
+                </div>
+                <a class="btn buy" th:href="@{'/qcinema/gocinemabranches/'+${film.fid}}" target="_blank">特惠购票</a>
+            </div>
+
+            <div class="movie-stats-container">
+
+                <div class="movie-index">
+                    <p class="movie-index-title">评分</p>
+                    <div class="movie-index-content score normal-score">
+                        <span class="index-left info-num one-line"><span class="stonefont" th:text="${film.score}"></span></span>
+                    </div>
+                </div>
+
+
+                <div class="movie-index">
+                    <p class="movie-index-title">累计票房</p>
+                    <div class="movie-index-content box">
+                        <span class="stonefont" th:text="${film.boxoffice}">&#xec18;&#xea92;&#xe3b1;</span><span class="unit">万</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="main-content-container clearfix">
+            <div class="tab-container">
+                <div class="tab-content-container">
+
+                        <div class="module">
+                            <div class="mod-title">
+                                <h3>剧情简介</h3>
+                            </div>
+                            <div class="mod-content">
+                                <span class="dra" th:text="${film.description}">美国国防情报局特工亨利（威尔·史密斯 饰），准备退休之际意外遭到一名神秘杀手的追杀，在两人的激烈较量中，他发现这名杀手竟然是年轻了20多岁的自己，一场我与我的对决旋即展开，而背后的真相也逐渐浮出水面。</span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="module">
+                            <div class="mod-title">
+                                <h3>演职人员</h3>
+                            </div>
+                            <div class="mod-content">
+                                <div class="celebrity-container clearfix">
+
+                                    <div class="celebrity-group">
+                                        <div class="celebrity-type">
+                                            导演
+                                        </div>
+                                        <ul class="celebrity-list clearfix">
+                                            <li class="celebrity " data-act="celebrity-click"
+                                                data-val="{celebrityid:30422}">
+
+                                                <div class="info">
+                                                    <a href="javascript:" class="yanyuanname" style="text-align: left" th:text="${film.director}">
+                                                        李安
+                                                    </a>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="celebrity-group">
+                                        <div class="celebrity-type">
+                                            演员
+                                        </div>
+                                        <ul class="celebrity-list clearfix">
+                                            <li class="celebrity actor" data-act="celebrity-click"
+                                                data-val="{celebrityid:28965}">
+                                                <div class="info">
+                                                    <a href="javascript:" class="yanyuanname">
+                                                        威尔·史密斯威尔·史密斯威尔·史密斯威尔·史密斯
+                                                    </a>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="module">
+                            <div class="mod-title">
+                                <h3>热门短评</h3>
+                            </div>
+
+                            <div id="score" class="hidden">
+                                <form id="comment-form">
+                                    <div class="score-msg-container ">
+                                        <div class="no-score">
+                                            请点击星星评分
+                                        </div>
+                                    </div>
+                                    <div class="score-star-contaienr">
+                                        <div id="raty" style="text-align: center;"></div>
+                                    </div>
+                                    <div id="editor"></div>
+                                    <!--<input type="hidden" name="score"/>-->
+                                    <input type="hidden" name="fid" th:value="${film.fid}"/>
+                                    <input type="hidden" name="content" id="text1"/>
+                                    <!--<input type="hidden" name="uid" th:value="${session.userinfo.uid}"/>-->
+                                    <input type="button" onclick="submitcomment()" value="提交"/>
+                                    <input type="button" onclick="cancel()" value="关闭"/>
+                                </form>
+                            </div>
+
+
+                            <div class="mod-content" id="app">
+                                <div class="comment-list-container" data-hot=10>
+
+                                    <ul>
+                                        <li class="comment-container " data-val="{commentid:1061771024}" v-for="l in list">
+                                            <div class="portrait-container">
+                                                <div class="portrait">
+                                                    <img :src="l.user.img"
+                                                         alt="">
+                                                </div>
+                                                <!--<i class="level-5-icon"></i>-->
+                                            </div>
+                                            <div class="main">
+                                                <div class="main-header clearfix">
+                                                    <div class="user">
+                                                        <span class="name">{{l.user.uname}}</span>
+
+                                                    </div>
+                                                    <div class="time" title="2019-03-24 00:35:03">
+                                                        <span title="2019-03-24 00:35:03">{{l.creaetedate}}</span>
+                                                        <ul class="score-star clearfix" data-score="0">
+                                                            <li v-for="c in l.score">
+                                                                <i class="half-star left active"></i><i
+                                                                    class="half-star right active"></i></li>
+                                                            <li v-for="c in 5-l.score">
+                                                                <i class="half-star left "></i><i
+                                                                    class="half-star right "></i></li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+                                                <div class="comment-content">
+                                                    {{l.content}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a class="comment-entry" href="javascript:comment()">写短评</a>
+
+                            </div>
+                        </div>
+                </div>
+        </div>
+
+    </div>
+    <!--<script id="comment-form-container" type="text/template">-->
+
+    <!--// </script>-->
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+<script type="text/javascript" th:inline="javascript">
+    var user = [[${session.userinfo}]]
+
+    function wishfilm() {
+        var x = $("#wish-film-div").children("i").css("color");
+        if (x == "rgb(255, 0, 0)") {
+            $("#wish-film-div").children("i").css("color", "");
+            $("#wish-film-div").children("span").html("想看")
+        } else {
+            $("#wish-film-div").children("i").css("color", "red");
+            $("#wish-film-div").children("span").html("已想看")
+        }
+    }
+
+    var app =new Vue({
+        el:"#app",
+        data:{
+            list:[]
+        }
+    })
+
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.customConfig.zIndex = 1
+    editor.create();
+
+
+    $('#raty').raty({
+        number: 5, //多少个星星设置
+        targetType: 'number', //类型选择，number是数字值，hint，是设置的数组值
+        path:"/front/imgs",
+        starOff: 'star-off.png',
+        starOn: 'star-on.png',
+        /*click: function (score, evt) {
+            alert('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt.type);
+        }*/
+    });
+
+    function comment() {
+        $("#score").show();
+        $(location).attr('href','#score');
+    }
+
+    function cancel() {
+        $("#score").hide();
+    }
+
+    function submitcomment() {
+        if(user==null){
+            alert("请先登录")
+            return
+        }
+        var text = editor.txt.text()
+        while(true){
+            if(text.trim().substring(0,6)=="&nbsp;"){
+                text = text.trim().substring(6)
+            }else{
+                break;
+            }
+        }
+        $("#text1").val(text.trim());
+        var params = $("#comment-form").serialize();
+        if($("[name=score]").val()==""){
+            alert("请评分")
+            return
+        }
+        if(text==""){
+            alert("请输入评论")
+            return
+        }
+        var params = $("#comment-form").serialize();
+        $.post("/qcoment/addcoment",params,function (data) {
+            alert(data);
+            location.reload()
+        })
+    }
+
+    //查看评论
+    $(function () {
+        var fid = [[${film.fid}]]
+        $.post("/qcoment/showcoment/"+fid,function (data) {
+            app.list = data
+        })
+    })
+
+
+</script>
+
+
+</body>
+</html>

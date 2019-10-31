@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/movie.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}">
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+
+</head>
+<body>
+
+<!--导航栏-->
+<div th:replace="front/common::common-header(activeUri='/films')"></div>
+
+<!--顶部黑色-->
+<div class="subnav">
+    <ul class="navbar">
+        <li>
+            <a data-act="subnav-click" data-val="{subnavClick:1}"
+               data-state-val="{subnavId:1}"
+               class="active" href="javascript:void(0);">搜索结果</a>
+        </li>
+
+    </ul>
+</div>
+
+
+<div class="container" id="app">
+            <!--电影显示界面-->
+            <div class="movies-list">
+                <dl class="movie-list">
+                    <dd v-for="f in films">
+                        <div class="movie-item">
+                            <a :href="'/qfilmdetails/details/'+f.fid">
+                                <div class="movie-poster">
+                                    <img :src="f.filmimg"/>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="channel-detail movie-item-title" th:title="f.fname">
+                            <a :href="'/qfilmdetails/details/'+f.fid" target="_blank" data-act="movies-click" data-val="{movieId:1211270}">{{f.fname}}</a>
+                        </div>
+                        <div class="channel-detail channel-detail-orange"><i class="integer">{{f.score}}</i></div>
+                </dl>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:replace="front/common::common-footer"></div>
+</body>
+<script th:inline="javascript">
+    var films=[[${films}]]
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            films:films,
+        }
+    })
+</script>
+
+</html>

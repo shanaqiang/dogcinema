@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/movie.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/cinemadetails.css}"/>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=afd8ab68e41b170598f8fb96ae18d8ae"></script>
+</head>
+<body>
+<div th:replace="front/common::common-header(activeUri='/cinemas')"></div>
+
+<div class="header-placeholder"></div>
+<div id="app">
+    <div class="banner cinema-banner">
+        <div class="wrapper clearfix">
+            <div class="cinema-left">
+                <div class="avatar-shadow">
+                    <img class="avatar" src="https://p1.meituan.net/deal/a63489de34a41fc04e01d1518df437ab58254.jpg@292w_292h_1e_1c">
+                </div>
+            </div>
+
+            <div class="cinema-main clearfix">
+                <div class="cinema-brief-container">
+                    <h3 class="name text-ellipsis" >{{cinemabranch.cdname}}</h3>
+                    <div class="address text-ellipsis">{{cinemabranch.address}}</div>
+                    <div class="telphone">电话：{{cinemabranch.tel}}</div>
+
+                    <div class="features-group">
+                        <div class="group-title">影院服务</div>
+
+                        <div class="feature">
+                            <span class="tag ">儿童优惠</span>
+                            <p class="desc text-ellipsis" title="1.3米以下儿童可免费无座观影（VIP厅、IMAX厅、4DX厅除外），一名成人限带一名儿童（仅限1.3米以下，观看3D均有3D眼镜）。">1.3米以下儿童可免费无座观影（VIP厅、IMAX厅、4DX厅除外），一名成人限带一名儿童（仅限1.3米以下，观看3D均有3D眼镜）。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="container" class="cinema-map"></div>
+
+        </div>
+    </div>
+    <div class="movies-channel" style="margin-top: 50px">
+        <div class="movies-panel">
+            <div class="movies-list">
+                <dl class="movie-list">
+                    <dd v-for="f in films">
+                        <div class="movie-item">
+                            <a :href="'/qfilmdetails/details/'+f.fid">
+                                <div class="movie-poster">
+                                    <img v-bind:src="f.filmimg"/>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="channel-detail movie-item-title" th:title="f.fname">
+                            <a :href="'/qfilmdetails/details/'+f.fid" target="_blank" data-act="movies-click" data-val="{movieId:1211270}">{{f.fname}}</a>
+                        </div>
+                        <div class="channel-detail channel-detail-orange"><i class="integer">{{f.score}}</i></div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+
+
+<script>
+    var cbid=[[${cbid}]]
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            films:[],
+            cinemabranch:{},
+        }
+    })
+    var x=0
+    var y=0
+    $(function () {
+        $.post("/qcinema/showallfilmsbycbid",{
+            cbid:cbid,
+        },function (data) {
+            console.log(data)
+            app.films=data.maps.films
+            app.cinemabranch=data.maps.cinemabranch
+            var locate=app.cinemabranch.coordinate
+            x=locate.substring(0,locate.indexOf(","))
+            y=locate.substring(locate.indexOf(",")+1)
+
+            var map = new AMap.Map('container', {
+                resizeEnable: true, //是否监控地图容器尺寸变化
+                zoom:17, //初始化地图层级
+                center: [x, y] //初始化地图中心点
+            });
+        })
+
+
+    })
+
+
+
+</script>
+
+
+</body>
+
+</html>

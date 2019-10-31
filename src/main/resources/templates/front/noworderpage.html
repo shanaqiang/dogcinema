@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/filmdetails.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/order2.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}"/>-->
+    <script type="text/javascript" th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/jquery.raty.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/front/js/bootstrap.min.4.3.1.js}"></script>-->
+</head>
+<body>
+<div th:replace="front/common::common-header"></div>
+
+<div class="container" id="app">
+
+    <div class="count-down-wrapper">
+        <div class="count-down" data-payleftseconds="839">
+            <p class="time-left">
+                请在
+                <span class="minute"id="mm"></span>
+                分钟
+                <span class="second" id="ss"></span>秒内完成支付
+            </p>
+            <p class="tip">超时订单会自动取消，如遇支付问题，请致蜗牛眼客服：1010-5335</p>
+        </div>
+    </div>
+
+    <p class="warning">请仔细核对场次信息，出票后将<span class="attention">无法退票和改签</span></p>
+
+    <table class="order-table">
+        <thead>
+        <tr>
+            <th>影片</th>
+            <th>时间</th>
+            <th>影院</th>
+            <th>座位</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="movie-name">{{filmname}}</td>
+            <td class="showtime">{{filmday}} {{starttime}}</td>
+            <td class="cinema-name">蜗牛影院</td>
+            <td>
+                <span class="hall">{{screenname}}厅</span>
+                <div class="seats">
+                    <div>
+                        <span class="border" v-for="order in list"><i>{{order.y}}</i>排<i>{{order.x}}</i>座</span>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        <div class="price-wrapper">
+            <span>实际支付 :</span>
+            <span class="price">{{summoney}}</span>
+        </div>
+        <div><div class="pay-btn" data-order-id="21474194220" data-act="pay-click" data-bid="b_u30afks6" onclick="pay();">确认支付</div></div>
+    </div>
+
+    <form name="cashierForm" method="post" action="https://mpay.meituan.com/cashier/pc/index">
+        <input type="hidden" name="token" value="">
+        <input type="hidden" name="tradeno" value="">
+        <input type="hidden" name="pay_token" value="">
+        <input type="hidden" name="website" value="mtmaoyan">
+        <input type="hidden" name="pay_success_url" value="http://www.maoyan.com/order/result/21474194220">
+        <input type="hidden" name="nb_platform" value="www">
+        <input type="hidden" name="nb_source" value="cashier-pcforcustomer">
+    </form>
+
+
+    <div class="modal-container" style="display:none" id="showdiv">
+        <div class="modal">
+            <span class="icon"></span>
+            <p class="tip">支付超时，该订单已失效，请重新购买</p>
+            <div class="ok-btn btn" id="hidediv" onclick="hidediv()">我知道了</div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+<script th:inline="javascript">
+
+    var appvue=new Vue({
+        el:"#app",
+        data:{
+            list:[],
+            filmname:{},
+            filmday:{},
+            starttime:{},
+            endtime:{},
+            screenname:{},
+            summoney:{}
+        }
+    });
+
+        var userid = [[${user.uid}]];
+        var oid=0
+
+        $(function(){
+            $.post("/order/findnoworder",{
+                uid:userid
+            },
+            function(data){
+                var status=data[0].status;
+                if(status==0){
+                    console.log(data);
+                    appvue.list=data;
+                    appvue.filmname=data[0].fname;
+                    appvue.filmday=data[0].scheduledate;
+                    appvue.starttime=data[0].showtime;
+                    appvue.endtime=data[0].endtime;
+                    appvue.screenname=data[0].sname;
+                    appvue.summoney=data[0].nowprice*data.length;
+                    oid=data[0].oid
+
+                }
+            }
+            );
+        });
+
+    var maxtime = 10 * 60;
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            $("#ss").html(seconds);
+            $("#mm").html(minutes);
+            --maxtime;
+        } else{
+            clearInterval(timer);
+            $("#showdiv").show();
+        }
+    }
+    timer = setInterval("CountDown()", 1000);
+    function hidediv(){
+        $("#showdiv").hide();
+        location.href="/";
+    }
+
+    function pay() {
+        location.href="/pay?money="+appvue.summoney+"&oid="+oid;
+    }
+</script>
+
+</body>
+</html>

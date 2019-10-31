@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/background/layui/css/layui.css}">
+    <script th:src="@{/background/layui/layui.js}"></script>
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="background/public::head"></div>
+    <div th:replace="background/public::side(activeUrl='addthreater')"></div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+
+
+            <form class="layui-form" th:action="@{/backoperate/addbrand}" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">影院名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cdname" required  lay-verify="required" placeholder="输入影院名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">影院地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" id="address" required lay-verify="required" placeholder="请输入影院地址" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">经纬度</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Coordinate" id='lnglat' required lay-verify="required" placeholder="请输入影院地址" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">营业状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="1" title="营业中">
+                        <input type="radio" name="status" value="0" title="暂停营业" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系方式</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tel" required lay-verify="required" placeholder="联系方式" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">影院描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="description" required lay-verify="required" placeholder="描述" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="submit" class="layui-btn"  lay-filter="formDemo" value="立即提交"></input>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+            <div>
+            </div>
+
+
+            <div class="layui-row">
+                <div class="layui-col-md2">
+                    <button class="layui-btn"  id="geo" style="margin-left:108px">查看影院位置地图</button>
+                </div>
+                <div class="layui-col-md9 layui-col-md-offset1">
+                    <div style="border:1px solid yellowgreen;width:90%;height:400px" id="wrapper">
+                        <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.15&key=2c817010c243a55913a99b1864e97e34&plugin=AMap.Geocoder"></script>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                //Demo
+                layui.use('form', function(){
+                    var form = layui.form;
+
+                    //监听提交
+                    form.on('submit(formDemo)', function(data){
+                        layer.msg(JSON.stringify(data.field));
+                        return false;
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div><div th:replace="background/public::foot"></div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+
+    var map = new AMap.Map("wrapper", {
+        resizeEnable: true
+    });
+
+    var geocoder = new AMap.Geocoder({
+        city: "09",
+    });
+
+    var marker = new AMap.Marker();
+
+    function geoCode() {
+        var address  = document.getElementById('address').value;
+        geocoder.getLocation(address, function(status, result) {
+            if (status === 'complete'&&result.geocodes.length) {
+                var lnglat = result.geocodes[0].location
+                document.getElementById('lnglat').value = lnglat;
+                marker.setPosition(lnglat);
+                map.add(marker);
+                map.setFitView(marker);
+            }else{
+                log.error('根据地址查询位置失败');
+            }
+        });
+    }
+    document.getElementById("geo").onclick = geoCode;
+</script>
+</body>
+</html>

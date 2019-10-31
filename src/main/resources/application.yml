@@ -1,0 +1,67 @@
+spring:
+  datasource:
+    #数据源基本配置
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://129.204.81.91:3306/wnmovie?serverTimeZone=UTC
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      # 最大支持文件大小
+      max-file-size: 100MB
+      # 最大支持请求大小
+      max-request-size: 100MB
+      #默认支持文件上传
+      enabled: true
+      #支持文件写入磁盘
+      file-size-threshold: 0
+      #上传文件的临时目录
+      location:
+
+
+mybatis:
+  # model的包
+  type-aliases-package: com.itwn.cinema.pojo
+  #mappers.xml所在位置
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  configuration:
+    # 开启驼峰uName自动映射到u_name
+    map-underscore-to-camel-case: true
+
+#mappers 多个接口时逗号隔开
+#mapper.mappers=tk.mybatis.mapper.common.Mapper
+mapper:
+  mappers: com.itwn.config.MyMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+#显示mysql语句
+logging:
+  level:
+    com.itwn.cinema.mapper: DEBUG
+
+
+
+
+
+

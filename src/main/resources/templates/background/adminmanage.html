@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/background/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}">
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}">
+    <script th:src="@{/background/layui/layui.js}"></script>
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="background/public::head"></div>
+    <div th:replace="background/public::side(activeUrl='adminmanage')"></div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            员工管理界面
+            <div id="app">
+                <!--<table class="layui-table">
+                    <colgroup>
+                        <col width="80">
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>年龄</th>
+                        <th>性别</th>
+                        <th>手机</th>
+                        <th>状态</th>
+                        <th>
+                            <button type="button" class="layui-btn-sm layui-btn-radius" onclick="add()">添加</button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="l in list">
+                        <td>{{l.aid}}</td>
+                        <td>{{l.aname}}</td>
+                        <td>{{l.age}}</td>
+                        <td>{{l.gender}}</td>
+                        <td>{{l.tel}}</td>
+                        <td v-if="l.status==0">员工</td>
+                        <td v-if="l.status==1">经理</td>
+                        <td v-if="l.status==2">BOSS</td>
+                        <td v-if="l.status==-1">离职</td>
+                        <td>
+                            <button type="button" class="layui-btn-sm layui-btn-radius">修改</button>
+                            <button type="button" class="layui-btn-sm layui-btn-radius">删除</button>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>-->
+
+                <form id="set-form" class="mt-5">
+                    <table class="table">
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>年龄</th>
+                            <th>性别</th>
+                            <th>手机</th>
+                            <th>状态</th>
+                            <th>职位</th>
+                            <th>
+                                <button type="button" onclick="add()">添加</button>
+                            </th>
+                        </tr>
+                        <tr v-for="l in list" :id="l.aid">
+                            <td>{{l.aid}}</td>
+                            <td>{{l.aname}}</td>
+                            <td>{{l.age}}</td>
+                            <td>{{l.gender}}</td>
+                            <td>{{l.tel}}</td>
+                            <td v-if="l.status==0">离职</td>
+                            <td v-if="l.status==1">在职</td>
+                            <td v-if="l.status==-1">冻结</td>
+
+                            <td v-if="l.rid==1">员工</td>
+                            <td v-if="l.rid==2">经理</td>
+                            <td v-if="l.rid==3">BOSS</td>
+
+                            <td style="display: none">
+                                <select name="status" v-model:value="status">
+                                    <option value="1">在职</option>
+                                    <option value="0">离职</option>
+                                    <option value="-1">冻结</option>
+                                </select>
+                            </td>
+                            <td style="display: none">
+                                <select name="rid" v-model:value="rid">
+                                    <option v-for="r in role" :value="r.rid">{{r.rolename}}</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <button type="button" @click="upd(event)">修改</button>
+                                <button type="button" @click="del(l.aid)">删除</button>
+                            </td>
+
+                            <td style="display: none">
+                                <button type="button" onclick="sureupd(this)">确定</button>
+                                <button class="cancel" type="button" onclick="cancelupd(this)">取消</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <form id="add-form" class="mt-5">
+                    <table class="table" id="add-input" style="display: none">
+                        <tr>
+                            <th>用户名</th>
+                            <th>年龄</th>
+                            <th>性别</th>
+                            <th>手机</th>
+                            <th>状态</th>
+                            <th>职位</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td><input name="aname"></td>
+                            <td><input name="age"></td>
+                            <td>
+                                <input type="radio" name="gender" value="男" checked>男
+                                <input type="radio" name="gender" value="女">女
+                            </td>
+                            <td><input name="tel"></td>
+                            <td>
+                                <select name="status">
+                                    <option value="1">在职</option>
+                                    <option value="0">离职</option>
+                                    <option value="-1">冻结</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="rid">
+                                    <option v-for="r in role" :value="r.rid">{{r.rolename}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" onclick="sure()">确定</button>
+                                <button type="button" onclick="cancel()">取消</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="background/public::foot"></div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    //Vue
+    var app = new Vue({
+        el: "#app",
+        data: {
+            list: [],
+            role:[],
+            status:0,
+            rid:1
+        },
+        methods:{
+            del:function (id) {
+                if(confirm("确定要删除吗？不可恢复！建议选择冻结用户")){
+                    $.post("/hadmin/del/"+id,function (data) {
+                        alert("删除成功")
+                        location.reload();
+                    })
+                }
+            },
+            upd:function (e) {
+
+                //关闭其他修改选项
+                $(".cancel").each(function () {
+                    $(this).click()
+                })
+
+
+               // alert($(e.currentTarget).parent().prev().html())
+                $(e.currentTarget).parent().hide()
+                $(e.currentTarget).parent().prevAll("td:hidden").show()
+                $(e.currentTarget).parent().next().show()
+                $(e.currentTarget).parent().prevAll(":eq(2)").hide()
+                $(e.currentTarget).parent().prevAll(":eq(3)").hide()
+
+                //回显
+                var aid = parseInt($(e.currentTarget).parent().parent().children(":eq(0)").text())
+                $.post("/hadmin/showone",{aid:aid},function (data) {
+                    app.status = data.status
+                    app.rid = data.rid
+                })
+
+            }
+        }
+    });
+
+    //显示所有管理员
+    function showAllAdmin() {
+        $.post("/backoperate/showAllAdmin", function (data) {
+            app.list = data;
+        })
+    }
+
+    showAllAdmin();
+
+    //增加管理员
+    function add() {
+        $("#add-input").show();
+    }
+
+    function sure() {
+        var aname = $("#add-form").find("input[name=aname]").val();
+        var age = $("#add-form").find("input[name=age]").val();
+        var gender = $("#add-form").find("input[name=gender]").filter(":checked").val();
+        var tel = $("#add-form").find("input[name=tel]").val();
+        var status = $("#add-form").find("input[name=status]").val();
+        var rid = $("#add-form").find("input[name=rid]").val();
+        if(aname==""||age==""||gender==""||tel==""||status==""||rid==""){
+            alert("请填写完整信息");
+            return;
+        }
+        var params = $("#add-form").serialize();
+        console.log(params)
+        $.post("/hadmin/add",params,function (data) {
+            alert(data);
+            location.reload()
+        })
+    }
+
+    function cancel(){
+        $("#add-input").hide();
+    }
+    
+    //显示角色
+    $.post("/hadmin/showroles",function (data) {
+        app.role = data
+        console.log(data)
+    })
+
+    //确定修改
+    function sureupd(obj) {
+        var rid = $(obj).parent().parent().find("[name=rid]").val();
+        var status = $(obj).parent().parent().find("[name=status]").val();
+        var aid = parseInt($(obj).parent().parent().children(":eq(0)").text())
+        $.post("/hadmin/set",{rid:rid,status:status,aid:aid},function (data) {
+            alert(data)
+            location.reload()
+        })
+    }
+
+    //取消修改
+    function cancelupd(obj) {
+        $(obj).parent().hide()
+        $(obj).parent().prev().show()
+        $(obj).parent().prevAll(":eq(3)").show()
+        $(obj).parent().prevAll(":eq(4)").show()
+        $(obj).parent().prevAll(":eq(1)").hide()
+        $(obj).parent().prevAll(":eq(2)").hide()
+
+    }
+
+
+
+
+</script>
+</body>
+</html>

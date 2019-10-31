@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<div th:fragment="common-header">
+    <div class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">蜗牛影院</a>
+            <div class="nav">
+                <ul class="navbar">
+                    <li><a href="/" data-act="home-click" th:class="${activeUri == '/'? 'active' : ''}">首页</a></li>
+                    <li><a href="/films" data-act="movies-click"
+                           th:class="${activeUri == '/films'? 'active' : ''}">影片</a></li>
+                    <li><a href="/qcinema/gocinemabranch" data-act="cinemas-click"
+                           th:class="${activeUri == '/qcinema/gocinemabranch'? 'active' : ''}">放映点</a></li>
+
+                    <li><a href="/board" data-act="board-click"
+                           th:class="${activeUri == '/board'? 'active' : ''}">榜单</a></li>
+                </ul>
+            </div>
+
+            <div class="user-info">
+                    <div class="user-avatar J-login" th:if="${session.user} == null">
+                        <img th:src="@{/front/imgs/header/user-unlogin.png}" onclick="test();">
+                        <span class="caret"></span>
+                        <ul class="user-menu">
+                            <li><a th:href="@{/login}">&emsp;登录&emsp;</a></li>
+                        </ul>
+                    </div>
+                    <div class="user-avatar J-login" th:if="${session.user} != null">
+                        <img th:src="@{/front/imgs/header/{img}(img=${session.user.img})}" onclick="test();">
+                        <span class="caret"></span>
+                        <ul class="user-menu">
+                            <li><a th:href="@{/myinfopage}">&emsp;个人中心&emsp;</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+
+            <form action="/qfilm/showonebyname" method="post" target="_blank" class="search-form" data-actform="search-click">
+                <input name="fname" class="search" type="search" maxlength="32" placeholder="找影视剧"
+                       autocomplete="off">
+                <input class="submit" type="submit" value="">
+            </form>
+        </div>
+    </div>
+    <div class="header-placeholder"></div>
+</div>
+
+<div th:fragment="common-footer">
+    <div class="footer">
+        <p>上海蜗牛创想有限公司</p>
+        <p>
+            &copy;2016
+            蜗牛影院 woniuycinema.com
+        </p>
+        <div class="certificate">
+            <a href="javascript:">
+                <img th:src="@{/front/imgs/footer/footer_01.png}"/>
+            </a>
+            <a href="javascript:">
+                <img th:src="@{/front/imgs/footer/footer_02.png}"/>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

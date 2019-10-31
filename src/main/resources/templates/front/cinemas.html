@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/cinema.css}"/>
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+
+</head>
+
+<body>
+<div th:replace="front/common::common-header(activeUri='/qcinema/gocinemabranch')"></div>
+
+<div class="container" id="app" style="margin-top: 50px">
+
+    <div class="cinemas-list">
+        <h2 class="cinemas-list-header">影院列表</h2>
+
+        <div class="cinema-cell" v-for="c in cinemabranches">
+            <div class="cinema-info">
+                <a :href="'/qcinema/showone/'+c.cdid+'/0'" class="cinema-name" data-act="cinema-name-click" data-bid="b_4tkpau4m" data-val="{city_id: 10, cinema_id: 13237}">{{c.cdname}}</a>
+                <p class="cinema-address">{{c.address}}</p>
+            </div>
+
+
+            <div class="buy-btn">
+                <a :href="'/qcinema/showone/'+c.cdid+'/0'"  data-act="buy-btn-click" data-val="{city_id: 10, cinema_id: 13237}" data-bid="b_4tkpau4m" style="cursor: pointer">选座购票</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cinema-pager">
+        <ul class="list-pager">
+            <li v-for="p in pageinfo.pages" v-if="p===pageinfo.pageNum" class="active" ><a @click.prevent="page(p)">{{p}}</a></li>
+            <li v-else><a @click.prevent="page(p)">{{p}}</a></li>
+            <li><a onclick="nextpage();">下一页</a></li>
+        </ul>
+    </div>
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+</body>
+
+<script th:inline="javascript">
+    var fid=[[${fid}]]
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            cinemabranches:[],
+            pageinfo:{},
+        }
+    })
+
+    $(function () {
+        page(1)
+    })
+
+    function page(i){
+        $.post("/qcinema/showfilmcinemabranches",{
+            pagenum:i,
+            pagesize:6,
+            fid:fid,
+        },function (data) {
+            console.log(data)
+            app.cinemabranches=data.list
+            app.pageinfo=data
+        })
+    }
+    
+    function nextpage() {
+        var pagenum=app.pageinfo.pageNum
+        page(pagenum+1)
+    }
+
+</script>
+</html>

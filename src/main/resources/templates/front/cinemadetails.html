@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/cinemadetails.css}"/>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=afd8ab68e41b170598f8fb96ae18d8ae"></script>
+</head>
+<body>
+<div th:replace="front/common::common-header(activeUri='/cinemas')"></div>
+
+<div class="banner cinema-banner" id="app1">
+    <div class="wrapper clearfix">
+        <!--放映点图片-->
+        <!--<div class="cinema-left">
+            <div class="avatar-shadow">
+                <img class="avatar" src="https://p1.meituan.net/deal/a63489de34a41fc04e01d1518df437ab58254.jpg@292w_292h_1e_1c">
+                <div class="avatar-num">查看全部2张图片</div>
+            </div>
+        </div>-->
+
+        <div class="cinema-main clearfix">
+            <div class="cinema-brief-container">
+                <h3 class="name text-ellipsis">放映点：{{branch.cdname}}</h3>
+                <div class="address text-ellipsis">地址：{{branch.address}}</div>
+                <div class="telphone">电话：{{branch.tel}}</div>
+
+                <div class="features-group">
+                    <div class="group-title">影院服务</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--地图-->
+        <div id="container" class="cinema-map"></div>
+
+
+    </div>
+</div>
+
+
+<div class="container" id="app2">
+    <div class="movie-list-container" data-cinemaid="13237">
+        <div class="movie-list">
+            <div v-for="f in films" v-if="f.fid ==fid"
+                 class="movie active"
+                 data-index="0"
+                 data-movieid="1277939"
+                 data-bid="b_uup5nnq7"
+                 data-act="cinema-movie-click"
+                 data-val="{city_id:10, movie_id:1277939, cinema_id:13237}">
+                <img :src="f.filmimg" alt="">
+            </div>
+            <div v-else
+                 class="movie"
+                 data-index="0"
+                 data-movieid="1277939"
+                 data-bid="b_uup5nnq7"
+                 data-act="cinema-movie-click"
+                 data-val="{city_id:10, movie_id:1277939, cinema_id:13237}" @click="test(f.fid)">
+                <img :src="f.filmimg" alt="">
+            </div>
+
+
+            <!--<span class="pointer"></span>-->
+        </div>
+        <!--<span class="scroll-prev scroll-btn"></span>
+        <span class="scroll-next scroll-btn"></span>-->
+    </div>
+
+    <div class="show-list active" data-index="0">
+        <div class="movie-info" v-for="f in films" v-if="f.fid ==fid ">
+            <div>
+                <h3 class="movie-name">{{f.fname}}</h3>
+
+                <span class="score sc">{{f.score}}</span>
+
+            </div>
+
+            <div class="movie-desc">
+                <div>
+                    <span class="key">时长 :</span>
+                    <span class="value">{{f.duration}}分钟</span>
+                </div>
+                <div>
+                    <span class="key">类型 :</span>
+                    <span class="value"> {{f.type}} </span>
+                </div>
+                <div>
+                    <span class="key">主演 :</span>
+                    <span class="value"> {{f.director}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="show-date">
+            <span>观影时间 :</span>
+            <span v-for="(d,index) in maps.maps.date" v-if="index == app2.index"
+                  class="date-item active"
+                  data-index="0">{{d}}</span>
+            <span v-else @click="check(index)"
+                  class="date-item"
+                  data-index="0">{{d}}</span>
+        </div>
+
+        <div v-if="maps.maps.schedule.length == 0">
+            <div class="plist-container active">
+                <div class="finished-all-shows">
+                    <span class="finish-img"></span>
+                    <br/>
+                    <span class="finish-text">当日场次已放映完</span>
+                </div>
+            </div>
+        </div>
+        <div class="plist-container active" v-for="(l,index) in maps.maps.schedule" v-if="index==app2.index">
+
+            <table class="plist">
+                <thead>
+                <tr>
+                    <th>放映时间</th>
+                    <th>语言版本</th>
+                    <th>放映厅</th>
+                    <th>售价（元）</th>
+                    <th>选座购票</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="" v-for="s in l">
+                    <td>
+                        <span class="begin-time">{{s.show}}</span>
+                        <br/>
+                        <span class="end-time">{{s.end}}</span>
+                    </td>
+                    <td>
+                        <span class="lang">{{s.language}}</span>
+                    </td>
+                    <td>
+                        <span class="hall">{{s.sname}}</span>
+                    </td>
+                    <td>
+                        <span class="sell-price"><span class="stonefont">{{s.price}}</span></span>
+                    </td>
+                    <td>
+                        <a :href="'/fseats/gofseats/'+s.sfid"
+                           class="buy-btn normal"
+                           data-tip=""
+                           data-act="show-click"
+                           data-bid="b_gvh3l8gg"
+                           data-val="{movie_id: 1277939, cinema_id:13237}"
+                        >选座购票</a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <div class="big-map-modal" style="display: none">
+        <div class="close-map"></div>
+        <div class="big-map"></div>
+    </div>
+</div>
+
+
+<div th:replace="front/common::common-footer"></div>
+</body>
+<script>
+    var fid = [[${fid}]]
+    var cdid = [[${cdid}]]
+
+    var app1 = new Vue({
+        el: "#app1",
+        data: {
+            branch: {}
+        }
+    })
+
+    var app2 = new Vue({
+        el: "#app2",
+        data: {
+            maps: [],
+            screens: [],
+            film: '',
+            films: [],
+            fid: fid,
+            index:0,
+            default:0
+        },
+        methods: {
+            test: function (id) {
+                location.href = 'http://localhost:8080/qcinema/showone/' + cdid + '/' + id
+            },
+            check:function (index) {
+                app2.index = index
+                //alert(app2.index)
+            }
+        }
+    })
+
+
+    //获取影片信息
+    $(function () {
+        $.post("/qfilm/showonefilm", {fid: fid}, function (data) {
+            app2.film = data
+        })
+    })
+
+    //获取影院信息
+    $(function () {
+        $.post("/qbranch/showonebranch/" + cdid, function (data) {
+            console.log(data)
+            app1.branch = data
+
+            var locate=app1.branch.coordinate
+            x=locate.substring(0,locate.indexOf(","))
+            y=locate.substring(locate.indexOf(",")+1)
+
+            var map = new AMap.Map('container', {
+                resizeEnable: true, //是否监控地图容器尺寸变化
+                zoom:17, //初始化地图层级
+                center: [x, y] //初始化地图中心点
+            });
+        })
+    })
+
+    $(function () {
+        $.post("/qschedule/showonefilmschedule", {fid: fid, cbid: cdid}, function (data) {
+            console.log(data);
+            app2.maps = data
+        })
+    })
+
+    //获取放映厅所有影片
+    $.post("/qschedule/showallfilm", {cbid: cdid}, function (data) {
+        app2.films = data
+        app2.default = data[0].fid
+        if(fid == 0){
+            location.href = 'http://localhost:8080/qcinema/showone/' + cdid + '/' + app2.default
+        }
+    })
+
+
+
+</script>
+</html>

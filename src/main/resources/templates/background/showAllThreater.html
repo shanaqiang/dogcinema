@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Dashboard Template for Bootstrap</title>
+    <link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <script th:src="@{/asserts/js/jquery.min.js}"></script>
+    <script th:src="@{/asserts/js/vue.js}"></script>
+    <script type="text/javascript" th:src="@{/asserts/js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/asserts/js/bootstrap.min.js}"></script>
+    <style type="text/css">
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid" id="app">
+    <div class="row">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2>影院列表</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th style="line-height: 30px">分店名</th>
+                        <th style="line-height: 30px">地址</th>
+                        <th style="line-height: 30px">联系方式</th>
+                        <th style="line-height: 30px">状态</th>
+                        <th style="line-height: 30px">描述</th>
+                        <th style="line-height: 30px">操作 </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="c in threater">
+                        <td style="line-height: 30px">{{c.cdname}}</td>
+                        <td style="line-height: 30px">{{c.address}}</td>
+                        <td style="line-height: 30px" >{{c.tel}}</td>
+                        <td style="line-height: 30px" v-if="c.status==0">暂停营业</td>
+                        <td v-else>营业中</td>
+                        <td style="line-height: 30px">{{c.description}}</td>
+                        <td><button   class="btn btn-outline-warning btn-sm" @click="delbrand(c.cdid);">删除</button>  <button  type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#myModal"  @click="checkbrand(c.cdid);">修改</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{brand.cdname}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <form th:action="@{/backoperate/modifybrand}" method="post">
+                            <input type="hidden"  name="cdid" :value="brand.cdid">
+                        <div class="form-group">
+                            <label>分店名</label>
+                            <input type="text" class="form-control" name="cdname" :value="brand.cdname">
+                        </div>
+                        <div class="form-group">
+                            <label>地址</label>
+                            <input type="text" class="form-control" name="address" :value="brand.address">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>状态</label>
+                            <p v-if="brand.status==1">
+                                <input type="radio"  name="status" value="1" checked >营业中
+                                <input type="radio"  name="status" value="0" >暂停营业
+                            </p>
+                            <p v-else>
+                                <input type="radio"  name="status" value="1">营业中
+                                <input type="radio"  name="status" value="0" checked >暂停营业
+                            </p>
+
+                        </div>
+                        <div class="form-group">
+                            <label>联系方式</label>
+                            <input type="text" class="form-control" name="tel" :value="brand.tel">
+                        </div>
+                        <div class="form-group">
+                            <label>描述</label>
+                            <input type="text" class="form-control" name="description" :value="brand.description">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-secondary"  value="提交修改">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            threater:{},
+            brand:{}
+        },
+        created:function(){
+            $.post("backoperate/showthreater",
+                function(data){
+                app.threater=data;
+            })
+        }
+    })
+    function  delbrand(id){
+        $.post("backoperate/delthreater",{cdid:id},function(data){
+            location.reload();
+        })
+    }
+    function checkbrand(id){
+        $.post("backoperate/checkbrand",{cdid:id},function(data){
+            app.brand=data;
+        })
+    }
+</script>
+</div>
+</body>
+
+</html>

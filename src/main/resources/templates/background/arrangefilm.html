@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/background/layui/css/layui.css}">
+    <!--<link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}" />-->
+    <script th:src="@{/background/layui/layui.js}"></script>
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <style type="text/css">
+        .layui-laydate-content > .layui-laydate-list {
+            padding-bottom: 0px;
+            overflow: hidden;
+        }
+
+        .layui-laydate-content > .layui-laydate-list > li {
+            width: 50%
+        }
+
+        .merge-box .scrollbox .merge-list {
+            padding-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="background/public::head"></div>
+    <div th:replace="background/public::side(activeUrl='arrange')"></div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;" id="app">
+            排片
+
+            <form class="layui-form" action="" id="form">
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">放映点</label>
+                        <div class="layui-input-inline">
+                            <select name="quiz" lay-filter="branch">
+                                <option value="">请选择放映点</option>
+                                <option :value="b.cdid" v-for="b in branch">{{b.cdname}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">影厅</label>
+                        <div class="layui-input-inline">
+                            <select name="sid" lay-verify="required" lay-filter="screen">
+                                <option value="">请选择影厅</option>
+                                <option :value="s.sid" v-for="s in screen">{{s.sname}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">放映日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="scheduledate" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">影片</label>
+                        <div class="layui-input-inline">
+                            <select name="fid" lay-verify="required">
+                                <option value="">请选择影片</option>
+                                <option :value="f.fid" v-for="f in films">{{f.fname}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始时间</label>
+                        <!--<div class="layui-inline">
+                            <label class="layui-form-label">请选择时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="test14" placeholder="H点m分">
+                            </div>
+                        </div>-->
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input v-model="starttime" type="text" name="showtime" class="layui-input" lay-verify="required" id="test14" placeholder="H点m分">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <label class="layui-form-label">结束时间</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input v-model="endtime" type="text" name="endtime" id="test15" lay-verify="required" disabled="value" placeholder="H点m分" autocomplete="off" class="layui-input layui-disabled">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">票价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="price" placeholder="￥" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" name="description" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="background/public::foot"></div>
+</div>
+
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            branch:[],
+            screen:[],
+            films:[],
+            filmid:'',
+            starttime:'',
+            endtime:0
+        },
+        updated:function(){
+            layui.use(['form'], function(){
+                var form = layui.form;
+                form.render();
+            })
+        }
+    });
+
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+            ,done:function(value){//value, date, endDate点击日期、清空、现在、确定均会触发。回调返回三个参数，分别代表：生成的值、日期时间对象、结束的日期时间对象
+                //console.log(value);
+                $.post("/filmController/showReleaseFilm",{date:value},function (data) {
+                    app.films = data.maps.films
+                })
+            }
+        });
+
+        //开始时间
+        laydate.render({
+            elem: '#test14'
+            ,type: 'time'
+            ,format: 'H点m分'
+            ,done:function(value){//value, date, endDate点击日期、清空、现在、确定均会触发。回调返回三个参数，分别代表：生成的值、日期时间对象、结束的日期时间对象
+                //console.log(value);
+                /*form.on('select(filmid)', function(data) {
+                    alert(data.value)
+                })*/
+                var fid = $("select[name=fid]").val();
+                var sid = $("[name=sid]").val();
+                var date = $("[name=scheduledate]").val();
+                var end = 28800000;
+                /*$.post("/filmController/showReleaseFilm",{date:value},function (data) {
+                    app.films = data.maps.films
+                })*/
+                $.post("/filmController/showReleaseTime",{starttime:value,filmid:fid,screenid:sid,releasedate:date},function (data) {
+                    if(data.code==200){
+                        end = data.maps.endtime;
+                        laydate.render({
+                            elem: '#test15'
+                            ,type: 'time'
+                            ,format: 'H点m分'
+                            ,value: new Date(end) //参数即为：2018-08-20 20:08:08 的时间戳
+                        });
+                    }else{
+                        alert(data.message);
+                        $("[name=showtime]").val("")
+                    }
+                })
+            }
+        });
+
+
+
+        //……
+        //提交ajax
+        form.on('submit(demo1)', function(data){
+            /*layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })*/
+            var params = data.field;
+            //alert(params)
+            $.post("/schedule/addschedule",params,function (data) {
+                alert(data);
+                location.reload()
+            });
+            return false;
+        });
+
+        form.on('select(branch)', function(data) {
+            //alert(data.value)
+            $.post("/screen/showscreens",{cbid:data.value},function (data) {
+                app.screen = data;
+                //form.render()
+            })
+        });
+
+        form.on('select(screen)', function(data) {
+            //alert(data.value)
+        })
+
+    });
+
+    //查询branch
+    $(function () {
+        $.post("/screen/show",function (data) {
+            app.branch = data
+        })
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

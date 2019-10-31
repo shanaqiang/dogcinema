@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/home.css}"/>
+    <script th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+</head>
+<body>
+<div th:replace="front/common::common-header(activeUri='/')"></div>
+
+
+<div class="container" id="app">
+    <div class="content">
+        <div class="aside">
+            <div class="ranking-box-wrapper">
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">
+                            <span class="textcolor_red">今日票房</span>
+                        </span>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="ranking-wrapper ranking-box">
+                            <div id="app3">
+                            <li class="ranking-item ranking-top ranking-index-1">
+                                <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="ticketList-movie-click"
+                                   data-val="{movieid:1277939}">
+                                    <div class="ranking-top-left">
+                                        <i class="ranking-top-icon"></i>
+                                        <img class="ranking-img  default-img"
+                                             v-bind:src="film.filmimg"/>
+                                    </div>
+                                    <div class="ranking-top-right">
+                                        <div class="ranking-top-right-main">
+                                            <span class="ranking-top-moive-name">{{film.fname}}</span>
+                                            <p class="ranking-top-wish">
+                                                <span class="stonefont">{{film.boxoffice}}</span>万
+                                                <!--<span class="stonefont">&#xeb61;&#xf3ee;&#xf11e;&#xe64b;.&#xf11e;&#xeb61;</span>万-->
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            </div>
+                            <div  id="app4">
+                            <li class="ranking-item ranking-index-2" v-for="(film,index) in list4">
+                                <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="ticketList-movie-click"
+                                   data-val="{movieid:1230121}">
+                                  <span class="normal-link">
+                                    <i class="ranking-index">{{index+2}}</i>
+                                    <span class="ranking-movie-name">{{film.fname}}</span>
+
+                                    <span class="ranking-num-info">
+                                        <span class="stonefont">{{film.boxoffice}}</span>万
+                                        <!--<span class="stonefont">&#xe740;&#xeb61;&#xf11e;&#xeb61;.&#xf5c3;&#xe740;</span>万-->
+                                      </span>
+                                  </span>
+                                </a>
+                            </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="most-expect-wrapper">
+                <div class="panel">
+                    <div class="panel-header">
+      <span class="panel-more">
+        <a href="javascript:" class="textcolor_orange" data-act="all-mostExpect-click">
+          <span>查看完整榜单</span>
+        </a>
+        <span class="panel-arrow panel-arrow-orange"></span>
+      </span>
+                        <span class="panel-title">
+        <span class="textcolor_orange">最受期待</span>
+      </span>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="ranking-wrapper ranking-mostExpect">
+                            <div id="app7">
+                            <li class="ranking-item ranking-top ranking-index-1">
+                                <a href="javascript:" data-act="mostExpect-movie-click"
+                                   data-val="{movieid:1249366}">
+                                    <div class="ranking-top-left">
+                                        <i class="ranking-top-icon"></i>
+                                        <img class="ranking-img  default-img"
+                                             v-bind:src="film1.filmimg"/>
+                                    </div>
+                                    <div class="ranking-top-right">
+                                        <div class="ranking-top-right-main">
+                                            <span class="ranking-top-moive-name">{{film1.fname}}</span>
+                                            <p class="ranking-release-time">上映时间：{{film1.releasedate}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="ranking-item ranking-index-2">
+                                <a href="javascript:"  data-act="mostExpect-movie-click"
+                                   data-val="{movieid:345419}">
+                                    <i class="ranking-index">2</i>
+                                    <span class="img-link"><img class="ranking-img default-img"
+                                                                v-bind:src="film2.filmimg"/></span>
+                                    <div class="name-link ranking-movie-name">{{film2.fname}}</div>
+                                </a>
+                            </li>
+
+                            <li class="ranking-item ranking-index-3">
+                                <a href="javascript:"  data-act="mostExpect-movie-click"
+                                   data-val="{movieid:1250952}">
+                                    <i class="ranking-index">3</i>
+                                    <span class="img-link"><img class="ranking-img default-img"
+                                                                v-bind:src="film3.filmimg"/></span>
+                                    <div class="name-link ranking-movie-name">{{film3.fname}}</div>
+                                </a>
+                            </li>
+                            </div>
+
+                            <div id="app8">
+                            <li class="ranking-item ranking-index-4" v-for="(film,index) in list8">
+                                <a href="javascript:" data-act="mosttExpect-movie-click"
+                                   data-val="{movieid:1217023}">
+                                  <span class="normal-link">
+                                    <i class="ranking-index">{{index+3}}</i>
+                                    <span class="ranking-movie-name">{{film.fname}}</span>
+
+                                    <span class="ranking-num-info">
+                                        <span class="stonefont">1551</span>人想看
+                                      </span>
+                                  </span>
+                                </a>
+                            </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+<div class="top100-wrapper">
+    <div class="panel">
+    <div class="panel-header">
+        <span class="panel-more">
+        <a href="javascript:" class="textcolor_orange" data-act="all-TOP100-click">
+          <span>查看完整榜单</span>
+        </a>
+        <span class="panel-arrow panel-arrow-orange"></span>
+        </span>
+        <span class="panel-title">
+        <span class="textcolor_orange">TOP 100</span>
+        </span>
+                    </div>
+                    <div class="panel-content" >
+                        <ul class="ranking-wrapper ranking-top100">
+                            <div id="app5">
+                            <li class="ranking-item ranking-top ranking-index-1">
+                                <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="TOP100-movie-click"
+                                   data-val="{movieid:1203}">
+                                    <div class="ranking-top-left">
+                                        <i class="ranking-top-icon"></i>
+                                        <img class="ranking-img  default-img"
+                                             v-bind:src="film.filmimg"/>
+                                    </div>
+                                    <div class="ranking-top-right">
+                                        <div class="ranking-top-right-main">
+                                            <span class="ranking-top-moive-name">{{film.fname}}</span>
+
+
+                                            <p class="ranking-top-wish">
+                                                <span class="stonefont">&#xf711;.&#xf11e;</span>分
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            </div>
+
+                            <div id="app6">
+                            <li class="ranking-item ranking-index-2" v-for="(film,index) in list6">
+                                <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="TOP100-movie-click"
+                                   data-val="{movieid:1297}">
+                                  <span class="normal-link">
+                                    <i class="ranking-index">{{index+2}}</i>
+                                    <span class="ranking-movie-name">{{film.fname}}</span>
+                                    <span class="ranking-num-info">
+                                        <span class="stonefont">{{film.score}}</span>分
+                                        <!--<span class="stonefont">&#xf711;.&#xf11e;</span>分-->
+                                      </span>
+                                  </span>
+                                </a>
+                            </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <div class="main">
+        <div class="movie-grid">
+        <div class="panel" id="app1">
+        <div class="panel-header">
+        <span class="panel-more">
+            <a href="/films?showType=1" class="textcolor_red" data-act="all-playingMovie-click">
+              <span>全部</span>
+            </a>
+            <span class="panel-arrow panel-arrow-red"></span>
+        </span>
+        <span class="panel-title">
+        <span class="textcolor_red">正在热映（{{total}}部）</span>
+      </span>
+                </div>
+                    <div class="panel-content">
+                        <dl class="movie-list">
+                            <dd v-for="film in list1">
+                                <div class="movie-item">
+                                    <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="playingMovie-click"
+                                       data-val="{movieid:503342}">
+                                        <div class="movie-poster">
+                                            <!--<img class="poster-default"-->
+                                                 <!--src="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/image/loading_2.e3d934bf.png"/>-->
+                                            <img v-bind:src="film.filmimg"/>
+                                            <div class="movie-overlay movie-overlay-bg">
+                                                <div class="movie-info">
+                                                    <div class="movie-title"
+                                                         v-bind:title="film.fname">{{film.fname}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="movie-detail movie-detail-strong movie-sale">
+                                        <a :href="'/qfilmdetails/details/'+film.fid"
+                                           class="active" target="_blank" data-act="salePlayingMovie-click"
+                                           data-val="{movieid:503342}">购 票</a>
+                                    </div>
+                                    <div class="movie-ver"><i class="imax2d"></i></div>
+                                </div>
+
+                                <!--<dd>-->
+                                <!--<div class="movie-item">-->
+                                <!--<a href="/films/1230121" target="_blank" data-act="playingMovie-click"-->
+                                <!--data-val="{movieid:1230121}">-->
+                                <!--<div class="movie-poster">-->
+                                <!--<img class="poster-default"-->
+                                <!--src="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/image/loading_2.e3d934bf.png"/>-->
+                                <!--<img data-src="https://p0.meituan.net/movie/cddf92d0ac6a0db837a1bc488b241c42267927.jpg@160w_220h_1e_1c"/>-->
+                                <!--<div class="movie-overlay movie-overlay-bg">-->
+                                <!--<div class="movie-info">-->
+                                <!--<div class="movie-score"><i class="integer">9.</i><i-->
+                                <!--class="fraction">4</i></div>-->
+                                <!--<div class="movie-title movie-title-padding"-->
+                                <!--title="中国机长">中国机长-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</a>-->
+                                <!--<div class="movie-detail movie-detail-strong movie-sale">-->
+                                <!--<a href="/cinemas?movieId=1230121"-->
+                                <!--class="active" target="_blank" data-act="salePlayingMovie-click"-->
+                                <!--data-val="{movieid:1230121}">购 票</a>-->
+                                <!--</div>-->
+                                <!--<div class="movie-ver"><i class="imax2d"></i></div>-->
+                                <!--</div>-->
+                        </dl>
+                    </div>
+                </div>
+
+    <div class="panel" id="app2">
+        <div class="panel-header">
+            <span class="panel-more">
+                <a href="/films?showType=2" class="textcolor_blue" data-act="all-upcomingMovie-click">
+                  <span>全部</span>
+                </a>
+            <span class="panel-arrow panel-arrow-blue"></span>
+        </span>
+            <span class="panel-title">
+            <span class="textcolor_blue">即将上映（{{total}}部）</span>
+        </span>
+                </div>
+                    <div class="panel-content">
+                        <dl class="movie-list">
+                            <dd v-for="film in list2">
+                                <div class="movie-item">
+                                    <a :href="'/qfilmdetails/details/'+film.fid" target="_blank" data-act="upcomingMovie-click"
+                                       data-val="{movieid:1249366}">
+                                        <div class="movie-poster">
+                                            <img class="poster-default"
+                                                 src="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/image/loading_2.e3d934bf.png"/>
+                                            <img v-bind:src="film.filmimg"/>
+                                            <div class="movie-overlay movie-overlay-bg">
+                                                <div class="movie-info">
+                                                    <div class="movie-title"
+                                                         v-bind:title="film.fname">{{film.fname}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="movie-detail movie-detail-strong movie-presale">
+                                        <a class="movie-presale-sep">预告片
+                                        </a><a href="/cinemas?movieId=1249366"
+                                               class="active" target="_blank" data-act="presaleUpcomingMovie-click"
+                                               data-val="{movieid:1249366}">预 售</a>
+                                    </div>
+                                    <div class="movie-ver"></div>
+                                </div>
+                                <div class="movie-detail movie-rt">{{film.releasedate}}上映</div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+
+<script>
+    //正在热映
+    var vueapp1 = new Vue({
+        el: "#app1",
+        data: {
+            list1: [],
+            total:{}
+        },
+        created: function () {
+            $.post("film/showhotfilm",
+                function (data) {
+                    //console.log(data);
+                    vueapp1.list1 = data;
+                    vueapp1.total=vueapp1.list1.length;
+                },
+                "json"
+            );
+        }
+    });
+
+    //即将上映
+    var vueapp2 = new Vue({
+        el: "#app2",
+        data: {
+            list2: [],
+            total:{}
+        },
+        created: function () {
+            $.post("film/showcommingfilm",
+                function (data) {
+                    //console.log(data);
+                    vueapp2.list2 = data;
+                    vueapp2.total=vueapp2.list2.length;
+                },
+                "json"
+            );
+        }
+    });
+
+
+
+    //票房首位
+    var vueapp3 = new Vue({
+        el: "#app3",
+        data: {
+            film:{},
+        },
+        created: function () {
+            $.post("film/showordertopfilm",
+                function (data) {
+                    //console.log(data);
+                    vueapp3.film=data[0];
+                },
+                "json"
+            );
+        }
+    });
+
+    //票房排行
+    var vueapp4=new Vue({
+        el:"#app4",
+        data:{
+            list4:[]
+        },
+        created: function () {
+            $.post("film/showorderfilm",
+                function (data) {
+                    //console.log(data);
+                    vueapp4.list4 = data;
+                },
+                "json"
+            );
+        }
+    });
+
+
+    //评分首位
+    var vueapp5=new Vue({
+        el:"#app5",
+        data:{
+            film:{}
+        },
+        created:function(){
+            $.post("film/showtopbyscore",
+                function(data){
+                    vueapp5.film=data[0];
+                }
+            );
+        }
+    });
+
+    //评分排序
+    var vueapp6=new Vue({
+        el:"#app6",
+        data:{
+            list6:[]
+        },
+        created:function(){
+            $.post("film/showorderbyscore",
+                function(data){
+                    vueapp6.list6=data;
+                }
+            );
+        }
+    });
+
+    //评论数前三
+    var vueapp7=new Vue({
+        el:"#app7",
+        data:{
+            film1:{},
+            film2:{},
+            film3:{}
+        },
+        created:function(){
+            $.post("film/showtopthreebygradecount",
+                function(data){
+                    vueapp7.film1=data[0];
+                    vueapp7.film2=data[1];
+                    vueapp7.film3=data[2];
+                    console.log(vueapp7.film1);
+                    console.log(vueapp7.film2);
+                    console.log(vueapp7.film3);
+                }
+            );
+        }
+    });
+
+    //评论数排序
+    var vueapp8=new Vue({
+        el:"#app8",
+        data:{
+            list8:[]
+        },
+        created:function(){
+            $.post("film/showorderbyshoworderbygradecount",
+                function(data){
+                    vueapp8.list8=data;
+                }
+            );
+        }
+    });
+
+
+</script>
+</body>
+</html>

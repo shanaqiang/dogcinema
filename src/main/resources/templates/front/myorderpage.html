@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if IE 9]><html class="ie9"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+<head>
+    <title>蜗牛电影 - 一网打尽好电影</title>
+    <link rel="stylesheet" href="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/common.0a548310.css"/>
+    <link rel="stylesheet" href="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/profile-profile.13d06bf4.css"/>
+    <script th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <a href="/" style="line-height: 80px;color: red;font-style: italic ;font-size: 25px;margin-left: 10px">蜗牛影院</a>
+            <div class="city-container" data-val="{currentcityid:10 }"></div>
+            <div class="user-info">
+
+                <div class="user-avatar has-login" id="abb">
+                    <img  v-if="user.img==null" src="https://img.meituan.net/maoyanuser/80cdf9a184d40eb9ecc0e5d170f3e45d11928.png">
+                    <img  v-else th:src="@{/front/imgs/header/{img}(img=${session.user.img})}">
+                    <span class="caret"></span>
+                    <ul class="user-menu">
+                        <li class="text">
+                            <a th:href="@{/myorderpage}">我的订单</a>
+                        </li>
+                        <li class="text login-name" title="Btf841360473"><a th:href="@{/myinfopage}">基本信息</a></li>
+                        <li class="text"><a href="outlogin" class="J-logout" data-act="logout-click">退出登录</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="header-placeholder"></div>
+    <div class="container">
+        <div class="content">
+            <div class="main">
+                <div class="info-content clearfix">
+                    <div class="user-profile-nav">
+                        <h1>个人中心</h1>
+                        <a th:href="@{/myorderpage}" class="active" >我的订单</a>
+                        <a th:href="@{/myinfopage}" >基本信息</a>
+                        <a th:href="@{/mylikepage}">我的收藏</a>
+                    </div>
+
+                  <div class="orders-container">
+
+                        <div class="profile-title">我的订单</div>
+                      <div id="app" style="width:900px">
+                        <viv v-for="c in order">
+                        <div class="order-box">
+                            <div class="order-header">
+                                <span class="order-date">{{c.createdate}}</span>
+                                <span class="order-id">猫眼订单号:{{c.serialnum}}</span>
+                                <span class="del-order"></span>
+                            </div>
+
+                            <div class="order-body">
+                                <div class="poster">
+                                    <img :src="'images/'+c.film.img">
+                                </div>
+
+                                <div class="order-content">
+                                    <div class="movie-name">《{{c.film.fname}}》</div>
+                                    <div class="cinema-name">{{c.cinemaBranch.cdname}}</div>
+                                    <div class="hall-ticket">
+                                        <span>{{c.screens.sname}}</span>
+                                        <template v-for="{{b in order.list}}">
+                                            <span>{{b.ssid}}</span>
+                                        </template>
+                                    </div>
+                                    <div class="show-time">{{c.createdate}}</div>
+                                </div>
+
+                                <div class="order-price">￥{{c.screenfilm.nowprice}}</div>
+
+                                <div class="order-status" v-if="c.status==1">
+                                    已完成
+                                </div>
+                                <div class="order-status" v-else>
+                                    未付款
+                                </div>
+
+                                <div class="actions">
+                                    <div>
+                                        <a :href="'checkorder?oid='+c.oid" class="order-detail" data-act="orders-detail-click" data-bid="b_y190atas">查看详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </viv>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var abb=new Vue({
+        el:"#abb",
+        data:{
+            user:{}
+        }
+    })
+   var app=new Vue({
+       el:"#app",
+       data:{
+           order:{}
+       },
+       created:function(){
+           $.post("myorder",function(data){
+               app.order=data;
+           })
+       }
+   })
+    $(function(){
+        $.post("/perinfo",function(data){
+            abb.user=data;
+        })
+    })
+</script>
+</body>
+</html>

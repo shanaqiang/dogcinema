@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/background/font-awesome-4.7.0/css/font-awesome.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/background/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap.min.4.3.1.css}">
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <script th:src="@{/background/layui/layui.js}"></script>
+    <style type="text/css">
+        .aisle-col {
+            border-bottom: none;
+            border: none;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" id="app">
+    <div th:replace="background/public::head"></div>
+    <div th:replace="background/public::side(activeUrl='sethall')"></div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+
+        <div class="form-inline">
+            <div class="mt-4 form-inline">
+                <div style="margin-left: 60px">所属影院</div>
+                <select id="cb" class="custom-select" onchange="showscreens();" style="margin-left: 30px;width: 200px;">
+                    <option value="0">请选择</option>
+                    <option v-bind:value="b.cdid" v-for="b in branches">{{b.cdname}}</option>
+                </select>
+
+                <div style="margin-left: 60px">具体影厅</div>
+                <select id="ss" class="custom-select" onchange="showseats();" style="margin-left: 30px;width: 200px">
+                    <option value="">请选择</option>
+                    <option v-bind:value="s.sid" v-for="s in screens">{{s.sname}}</option>
+                </select>
+
+                <button id="btchange" class="btn btn-danger ml-4" onclick="changeseats();" style="display: none">修改座位</button>
+
+            </div>
+        </div>
+
+
+        <div id="changemes" class="form-inline" style="margin-left: 50px;margin-top: 20px;visibility: hidden;display: none;">
+            <div class="ml-2">请输入行数：<input type="text" class="form-control" id="y"></div>
+            <div class="ml-5">请输入列数：<input type="text" class="form-control" id="x"></div>
+            <button class="btn btn-primary ml-2" onclick="setseats();">提交</button>
+        </div>
+
+
+        <div id="pannel" style="visibility: hidden;display: none;">
+            <div>
+                <h1 class="text-center" style="color: pink;">银幕中央</h1>
+            </div>
+            <table style="margin: 0 auto;">
+                <tr v-for="sy in seats">
+                    <td>{{sy.y}}</td>
+                    <td v-for="sx in sy.chairsX" v-if="sx.status==1">
+                        <img src="../filmimg/whitechair.png" style="padding: 10px;width: 80px;height: 80px" />
+                    </td>
+                    <td v-else>
+                        <img src="../filmimg/shiro.png" style="padding: 10px;color: rgba(255,255,255,0);width: 80px;height: 80px" />
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+
+
+        <div id="changepannel" style="visibility: hidden;display: none;">
+            <div>
+                <h1 class="text-center" style="color: pink;">银幕中央</h1>
+            </div>
+            <table style="margin: 0 auto;">
+                <tr v-for="(a,i) in y">
+                    <td>{{i+1}}</td>
+                    <td v-for="b in x">
+                        <img src="../filmimg/whitechair.png" v-bind:ad="a" v-bind:bd="b" @click="set(a,b)" style="padding: 10px;width: 80px;height: 80px" name="have"></img>
+                    </td>
+                    <td><button class="btn btn-success btn-sm" @click="change(a);">变！</button></td>
+                </tr>
+            </table>
+
+            <button class="btn btn-warning" style="display:block;margin:0 auto;" onclick="submit();">提交</button>
+        </div>
+
+
+
+    </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+    //获取分店
+    $(function () {
+        $.post("/screen/show",{},function (data) {
+            console.log(data);
+            app.branches=data;
+        })
+        
+    })
+
+    //获取影厅
+    function showscreens() {
+        var cbid=$("#cb").val()
+        $.post("/screen/showscreens",{
+            cbid:cbid,
+        },function(data){
+            console.log(data)
+            app.screens=data;
+        })
+    }
+
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            x:[],
+            y:[],
+            branches:[],
+            screens:[],
+            seats:[],
+        }
+    })
+
+    //显示修改影厅的行列输入框
+    function changeseats(){
+        $("#changemes").attr("style","margin-left: 50px;margin-top: 20px;visibility: visible")
+        $("#pannel").attr("style","visibility: hidden;display: none;")
+        $("#ss").attr("disabled","true")
+        $("#cb").attr("disabled","true")
+    }
+
+    //初始化影厅
+    //输入x，y坐标后显示影厅
+    function setseats(){
+        var x=$("#x").val();
+        var y=$("#y").val();
+        app.x=[];
+        app.y=[];
+        for(var i=1;i<=x;i++){
+            app.x.push(i)
+        }
+        for(var i=1;i<=y;i++){
+            app.y.push(i)
+        }
+        $("#changepannel").attr("style","visibility: visible")
+        $(".btn-warning").attr("style","display:block;margin:0 auto;visibility: visible")
+
+    }
+
+    //影厅id
+    var sid;
+
+    //反显座位
+    function showseats(){
+        sid=$("#ss").val();
+        if (sid!=0){
+            $.post("/screen/showscreenchairs",{
+                sid:sid,
+            },function(data){
+                console.log(data)
+                app.seats=data;
+                //
+            })
+            $("#pannel").attr("style","visibility: visiable")
+            $("#btchange").attr("style","")
+        }
+
+
+    }
+
+    //更改座位样式（可不可见）
+    function set(a,b){
+        if($("[ad="+a+"]"+"[bd="+b+"]").attr("src")=="../filmimg/whitechair.png"){
+            $("[ad="+a+"]"+"[bd="+b+"]").attr("src","../filmimg/shiro.png")
+            $("[ad="+a+"]"+"[bd="+b+"]").attr("name","not")
+        }else{
+            $("[ad="+a+"]"+"[bd="+b+"]").attr("src","../filmimg/whitechair.png")
+            $("[ad="+a+"]"+"[bd="+b+"]").attr("name","have")
+        }
+
+    }
+
+    //更改一行座位样式
+    function change(a){
+        if($("[ad="+a+"]"+"[bd=1]").attr("src")=="../filmimg/whitechair.png"){
+            $("[ad="+a+"]").attr("src","../filmimg/shiro.png")
+            $("[ad="+a+"]").attr("name","not")
+        }else{
+            $("[ad="+a+"]").attr("src","../filmimg/whitechair.png")
+            $("[ad="+a+"]").attr("name","have")
+        }
+    }
+
+
+    //提交修改的座位
+    function submit(){
+        var havechair;
+        var nothave;
+        $("[name='have']").each(function(){
+            var x=$(this).attr("bd")
+            var y=$(this).attr("ad")
+            havechair+="("+x+","+y+")"
+        })
+        $("[name='not']").each(function(){
+            var x=$(this).attr("bd")
+            var y=$(this).attr("ad")
+            nothave+="("+x+","+y+")"
+        })
+        $.post("/screen/addchairs",{
+            havechair:havechair,
+            nothave:nothave,
+            sid:sid,
+        },function(data){
+            layer.alert("修改成功")
+            setTimeout(function () {
+                location.href="/view/sethallview"
+            },1500)
+        })
+
+    }
+
+
+    
+
+
+
+</script>
+
+</body>
+</html>

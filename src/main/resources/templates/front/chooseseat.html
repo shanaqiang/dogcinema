@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>蜗牛影院</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/front/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/cinemadetails.css}"/>
+    <link rel="stylesheet" th:href="@{/front/css/filmseat1.css}"/>
+    <link rel="stylesheet" th:href="@{/background/layui/css/layui.css}">
+    <script th:src="@{/background/js/jquery.min.js}"></script>
+    <script th:src="@{/background/layer/layer.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+
+</head>
+
+<body>
+<div th:replace="front/common::common-header(activeUri='/qcinema/gocinemabranch')"></div>
+
+<div class="container" id="app">
+
+
+
+    <div class="main clearfix">
+        <div class="hall">
+            <div class="seat-example">
+                <div class="selectable-example example">
+                    <span>可选座位</span>
+                </div>
+                <div class="sold-example example">
+                    <span>已售座位</span>
+                </div>
+                <div class="selected-example example">
+                    <span>已选座位</span>
+                </div>
+            </div>
+
+
+            <div class="seats-block" data-cols="11" data-section-id="0000000000000001" data-section-name="普通区" data-seq-no="201910240215753">
+                <div class="row-id-container">
+                    <span class="row-id" v-for="(s,i) in seats">{{i+1}}</span>
+                </div>
+
+                <div class="seats-container">
+                    <div class="screen-container">
+                        <div class="screen">银幕中央</div>
+                        <div class="c-screen-line"></div>
+                    </div>
+
+                    <div class="seats-wrapper">
+                        <div class="row" v-for="s in seats">
+                            <span v-for="ss in s.seatX" v-if="ss.status===1" class="seat selectable" :sx="ss.x" :sy="ss.y" @click.prevent="change(ss.x,ss.y,ss.ssid)"></span>
+                            <span v-else-if="ss.status===0" class="seat" style="visibility: hidden" :sx="ss.x" :sy="ss.y" @click.prevent="change(this)"></span>
+                            <span v-else-if="ss.status===2" class="seat sold" :sx="ss.x" :sy="ss.y" @click.prevent="change(this)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="side">
+            <div class="movie-info clearfix">
+                <div class="poster">
+                    <img :src="film.filmimg">
+                </div>
+                <div class="content">
+                    <p class="name text-ellipsis">{{film.fname}}</p>
+                    <div class="info-item">
+                        <span>类型 :</span>
+                        <span class="value">{{film.type}}</span>
+                    </div>
+                    <div class="info-item">
+                        <span>时长 :</span>
+                        <span class="value">{{film.duration}}分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="show-info">
+                <div class="info-item">
+                    <span>影院 :</span>
+                    <span class="value text-ellipsis">{{cinemabranch.cdname}}</span>
+                </div>
+                <div class="info-item">
+                    <span>影厅 :</span>
+                    <span class="value text-ellipsis">{{screen.sname}}（儿童均需购票）</span>
+                </div>
+                <div class="info-item">
+                    <span>版本 :</span>
+                    <span class="value text-ellipsis">原版60帧2D</span>
+                </div>
+                <div class="info-item">
+                    <span>场次 :</span>
+                    <span class="value text-ellipsis screen">{{sf.scheduledate}} {{sf.showtime}}</span>
+                </div>
+                <div class="info-item">
+                    <span>票价 :</span>
+                    <span class="value text-ellipsis">￥{{sf.price}}/张</span>
+                </div>
+            </div>
+
+            <div class="ticket-info">
+                <div class="no-ticket" style="display:none">
+                    <p class="buy-limit">座位：一次最多选6个座位</p>
+                    <p class="no-selected">请<span>点击左侧</span>座位图选择座位</p>
+                </div>
+                <div class="has-ticket">
+                    <span class="text">座位：</span>
+                    <div class="ticket-container" data-limit="6"></div>
+                </div>
+
+                <div class="total-price">
+                    <div id="seatnum"></div>
+                    <span>总价 :</span>
+                    <span class="price">0</span>
+                </div>
+
+
+                <div class="total-price">
+                    <button type="button" class="layui-btn layui-btn-danger" style="width: 200px;display: block;margin: 0 auto;" onclick="buy()">购买</button>
+                </div>
+            </div>
+
+
+            <div class="confirm-order">
+                <div id="iLoginComp"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="front/common::common-footer"></div>
+
+</body>
+
+<script th:inline="javascript">
+    var sfid=[[${sfid}]]
+    var count=0;
+    var seatmes=""
+    var ssida=new Array()
+
+    var app=new Vue({
+        el:"#app",
+        data:{
+            seats:[],
+            film:{},
+            sf:{},
+            screen:{},
+            cinemabranch:{},
+        },
+        methods:{
+            change:function (x,y,ssid) {
+                if($("[sx="+x+"][sy="+y+"]").attr("class")=="seat selectable"){
+                    if(count>=6){
+                        layer.alert("最多只能选择6张")
+                    }else{
+                        $("[sx="+x+"][sy="+y+"]").attr("class","seat selected")
+                        count++
+                        var price=count*app.sf.price
+                        $(".price").text(price)
+                        $("#seatnum").append("<button id="+x+"i"+y+" abc="+x+"i"+y+" class='layui-btn layui-btn-warm' style='margin-top: 10px;margin-left: 10px;' onclick='cha(this)'>"+y+"排"+x+"座"+"</button>")
+                        ssida.push(ssid)
+                    }
+                }else if($("[sx="+x+"][sy="+y+"]").attr("class")=="seat selected"){
+                    count--
+                    $("[sx="+x+"][sy="+y+"]").attr("class","seat selectable")
+                    var price=count*app.sf.price
+                    $(".price").text(price)
+                    $("#"+x+"i"+y).remove()
+                    ssida.splice(ssida.indexOf(ssid),1)
+                }
+            }
+
+
+        }
+    })
+
+    function cha(obj){
+        var xy=$(obj).attr("abc")
+        var x=xy.substring(0,xy.indexOf("i"))
+        var y=xy.substring(xy.indexOf("i")+1)
+        count--
+        $("[sx="+x+"][sy="+y+"]").attr("class","seat selectable")
+        var price=count*app.sf.price
+        $(".price").text(price)
+        $("#"+x+"i"+y).remove()
+        ssida.splice(ssida.indexOf(ssid),1)
+
+
+    }
+
+
+
+    $(function () {
+        $.post("/fseats/showfseats",{
+            sfid:sfid,
+        },function (data){
+            console.log(data)
+            app.seats=data.maps.seats
+            app.film=data.maps.film
+            app.sf=data.maps.sf
+            app.screen=data.maps.screen
+            app.cinemabranch=data.maps.cinemabranch
+        })
+
+    })
+    
+    function buy() {
+        var ssidstring=ssida.toString()
+        location.href="/order/createorder?ssidstring="+ssidstring
+    }
+
+
+
+
+
+
+
+</script>
+</html>

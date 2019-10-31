@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--[if IE 8]><html class="ie8"><![endif]-->
+<!--[if IE 9]><html class="ie9"><![endif]-->
+<!--[if gt IE 9]><!--><html><!--<![endif]-->
+<head>
+    <title>猫眼电影 - 一网打尽好电影</title>
+    <link rel="stylesheet" href="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/common.0a548310.css"/>
+    <link rel="stylesheet" href="//s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:5788b470/profile-profile.13d06bf4.css"/>
+    <script th:src="@{/front/js/jquery.min.3.4.1.js}"></script>
+    <script th:src="@{/front/js/vue.min.2.6.10.js}"></script>
+    <style>
+        .aaaa{
+            width:100px;
+            height: 50px;
+            background: yellow;
+            border-radius: 15px;
+            border:0px;
+        }
+        [v-cloak] {
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-inner">
+            <a href="/" style="line-height: 80px;color: red;font-style: italic ;font-size: 25px;margin-left: 10px">蜗牛影院</a>
+            <div class="city-container" data-val="{currentcityid:10 }"></div>
+            <div class="user-info">
+                <div class="user-avatar has-login" id="abb">
+                    <img  v-if="use.img==null" src="https://img.meituan.net/maoyanuser/80cdf9a184d40eb9ecc0e5d170f3e45d11928.png">
+                    <img  v-else th:src="@{/front/imgs/header/{img}(img=${session.user.img})}">
+                    <span class="caret"></span>
+                    <ul class="user-menu">
+                        <li class="text">
+                            <a th:href="@{/myorderpage}">我的订单</a>
+                        </li>
+                        <li class="text login-name" title="Btf841360473"><a th:href="@{/myinfopage}">基本信息</a></li>
+                        <li class="text"><a href="outlogin" class="J-logout" data-act="logout-click">退出登录</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="header-placeholder"></div>
+    <div class="container" id="app" v-cloak>
+        <div class="content">
+            <div class="main">
+                <div class="info-content clearfix">
+                    <div class="user-profile-nav">
+                        <h1>个人中心</h1>
+                        <a th:href="@{/myorderpage}" >我的订单</a>
+                        <a th:href="@{/myinfopage}" class="active">基本信息</a>
+                        <a th:href="@{/mylikepage}">我的收藏</a>
+                    </div>
+
+                    <div class="profile-container">
+                        <div class="profile-title">
+                            基本信息
+                        </div>
+    <!--               修改头像-->
+                        <div class="avatar-container">
+                            更换头像</br></br>
+                            <form class="avatar-content" enctype="multipart/form-data" :action="'modifyheadimg?'+data" method="post">
+                                <p style="color: red" v-if="ee==1">你沒有选择一个头像</p>
+                                <img class="J-setted-avatar"  v-if="user.img==null" src="https://img.meituan.net/maoyanuser/80cdf9a184d40eb9ecc0e5d170f3e45d11928.png">
+                                <img  v-else :src="'/front/imgs/header/'+user.img" class="J-setted-avatar"   >
+                                <div class="J-upload-avatar-w upload-avatar-image" style="margin-left:20px">
+                                    <input type="file" name="uploadImg" id="inputUpdatFile" class="J-upload-avatar upload-btn" style="border:0px" value="更换头像"/>
+                                    <input type="submit" class="J-upload-avatar upload-btn" value="确认修改">
+                                </div>
+                            </form>
+                        </div>
+                        <form id="J-userexinfo-form" class="userexinfo-form avatar-content" action="modifyinfo" method="psot" >
+                            <div class="hidden">{{user.uid}}</div>
+                            <div class="userexinfo-form-section">
+                                <p>账号：</p>
+                                <span>{{user.uname}}</span>
+                            </div>
+
+                            <div class="userexinfo-form-section">
+                                <p>性别：</p>
+                                <span>
+                  <input type="radio" name="gender" id="userexinfo-form-gender-1" value="1"  class="ui-radio radio-first">
+                  <label for="userexinfo-form-gender-1">男</label>
+                </span>
+                                <span>
+                  <input type="radio" name="gender" id="userexinfo-form-gender-2" value="2"  class="ui-radio">
+                  <label for="userexinfo-form-gender-2">女</label>
+                </span>
+                            </div>
+
+                            <div class="userexinfo-form-section">
+                                <p>电话号码:</p>
+                                <input type="text" style="border:0px " name="tel" :value="user.tel">
+                            </div>
+
+                            <div class="userexinfo-form-section">
+                                <p>邮箱:</p>
+                                <span>{{user.email}} </span>
+                            </div>
+
+
+                            <div class="userexinfo-form-section">
+                                <p>Vip状态:</p>
+                                <span v-if="user.vip==1">已开通</span>
+                                <span v-else><a th:href="@{/pay(money=20,pid=0)}">还未开通,点击开通~~~</a></span>
+                            </div>
+
+
+                            <div class="userexinfo-form-section">
+                                <p>到期时间:</p>
+                                <span v-if="user.vip==1"> {{user.vipenddate}}</span>
+                                <span v-else>还未开通</span>
+                            </div>
+
+                            <div class="userexinfo-form-section">
+                                <p>积分:</p>
+                                <span v-if="user.integral!=0">{{user.integral}}</span>
+                                <span v-else>0</span>
+                            </div>
+                            <div class="userexinfo-form-section">
+                                <p>状态:</p>
+                                <span v-if="user.status==1">正常</span>
+                                <span v-else-if="user.status!=1">封号</span>
+                            </div>
+                            <input type="submit" class="aaaa" value="提交修改">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var abb=new Vue({
+        el:"#abb",
+        data:{
+            use:{}
+        }
+    })
+    var app=new Vue({
+        el:"#app",
+        data:{
+            user:{},
+            data:new Date(),
+            ee:0
+        }
+    })
+    $(function(){
+        var url=location.search;
+        if(url.indexOf("?")!=-1){
+            var se=url.split("?")[1].split("=")[1];
+            app.ee=se;
+        }
+    })
+
+    $(function(){
+        $.post("/perinfo",function(data){
+            app.user=data;
+            abb.use=data;
+            if(data.gender!="女"){
+                $("input[type='radio'][value=1]").attr("checked","checked" )
+            }else{
+                $("input[type='radio'][value=2]").attr("checked","checked" )
+            }
+        })
+    })
+    $("#modifyheadimg").click=function(){
+        $.post("/modifyheadimg",function(data){
+            $("#headimg").src="images/"+data;
+        })
+    }
+    $("#modifyheadimg").click=function(){
+        setTimeout(function(){
+            $.post("modifyheadimg",function(data){
+        })},1000)
+
+    }
+
+</script>
+</body>
+</html>
