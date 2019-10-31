@@ -4,7 +4,7 @@ import com.itwn.cinema.pojo.ScreenChair;
 import com.itwn.cinema.pojo.ScreenFilm;
 import com.itwn.cinema.pojo.ScreenSeats;
 import com.itwn.cinema.pojo.Screens;
-import javafx.stage.Screen;
+
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ public interface HIScreenService {
 
     List<ScreenChair> findScreenChairBySid(int sid);
 
-    List<Screen> findScreenBySnameAndCbid(String sname, int cbid);
 
     List<Screens> findAll();
 

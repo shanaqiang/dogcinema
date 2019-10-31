@@ -41,9 +41,7 @@ public class HScreenController {
     @RequestMapping("/addscreen")
     @ResponseBody
     public int addScreen(Screens screens){
-        if(hScreenService.findScreenBySnameAndCbid(screens.getSname(),screens.getCbid()).size()!=0){
-            return 0;
-        }
+
         System.out.println(screens);
         hScreenService.addScreen(screens);
         return 1;

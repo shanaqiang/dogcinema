@@ -1,20 +1,16 @@
 package com.itwn.cinema.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itwn.cinema.pojo.Film;
 import com.itwn.cinema.response.FilmLimit3;
-import com.itwn.cinema.service.HfilmService;
 import com.itwn.cinema.service.QIFilmService;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 

@@ -8,7 +8,6 @@ import com.itwn.cinema.pojo.ScreenChair;
 import com.itwn.cinema.pojo.ScreenFilm;
 import com.itwn.cinema.pojo.ScreenSeats;
 import com.itwn.cinema.pojo.Screens;
-import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,10 +70,6 @@ public class HScreenServiceImp implements HIScreenService {
         return screenChairMapper.selectBySid(sid);
     }
 
-    @Override
-    public List<Screen> findScreenBySnameAndCbid(String sname, int cbid) {
-        return screenMapper.selectBySnameAndCbid(sname,cbid);
-    }
 
     @Override
     public List<Screens> findAll() {
