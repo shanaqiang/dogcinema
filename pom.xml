@@ -8,11 +8,11 @@
         <version>2.1.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.itwn.cinema</groupId>
-    <artifactId>woniucinema</artifactId>
+    <groupId>com.shana.cinema</groupId>
+    <artifactId>dogcinema</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>woniucinema</name>
+    <name>dogcinema</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

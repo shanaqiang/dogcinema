@@ -10,7 +10,7 @@
     <!-- 配置别名 -->
     <typeAliases>
         <!-- 批量扫描别名 -->
-        <package name="com.itwn.cinema.pojo"/>
+        <package name="com.shana.cinema.pojo"/>
     </typeAliases>
 
     <plugins>

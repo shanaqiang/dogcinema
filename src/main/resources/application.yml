@@ -4,7 +4,7 @@ spring:
     username: root
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://129.204.81.91:3306/wnmovie?serverTimeZone=UTC
+    url: jdbc:mysql://116.62.218.239:3306/shanacinema?serverTimeZone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
     initialSize: 5
@@ -65,3 +65,5 @@ logging:
 
 
 
+server:
+  port: 8082
